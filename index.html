@@ -98,7 +98,37 @@
       color: #ffffff;
     }
   </style>
-</head>
+
+  <!-- 3D Luxury Custom Theme & Micro-Interactions -->
+  <style>
+    /* Keyframe Animations */
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 20px -3px rgba(79, 70, 229, 0.4); }
+      50% { box-shadow: 0 0 35px 2px rgba(79, 70, 229, 0.7); }
+    }
+    @keyframes floatOrb {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-15px) scale(1.05); }
+    }
+    @keyframes shimmerEffect {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    @keyframes crownBob {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(3deg); }
+    }
+    .crown-bob-gold { animation: crownBob 2.5s ease-in-out infinite; }
+    .crown-bob-silver { animation: crownBob 3s ease-in-out infinite 0.4s; }
+    .crown-bob-bronze { animation: crownBob 3.2s ease-in-out infinite 0.8s; }
+    
+    .shimmer-card {
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0) 100%);
+      background-size: 200% 100%;
+      animation: shimmerEffect 4s infinite linear;
+    }
+  </style>
+\n</head>
 <body class="min-h-screen flex flex-col bg-[#f4f6fb] dark:bg-[#0b1120] dark:text-slate-100 transition-colors duration-200">
 
   <!-- ================= TOP HEADER (Exact RewardJoy Layout) ================= -->
@@ -390,7 +420,99 @@
           </div>
         </div>
 
-        <!-- Cooperate Banner (Daily Challenge $100 Banner) -->
+        
+        <!-- 7-Day Streak Rewards Calendar (3D Tactile Interactive Cards) -->
+        <div class="card-3d-luxury rounded-3xl p-6">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2.5">
+              <i class="fa-solid fa-fire text-amber-500 text-base"></i>
+              <div>
+                <h3 class="font-black text-sm text-white">Daily Login Streak Rewards</h3>
+                <p class="text-[11px] text-slate-400">Claim consecutive daily bonuses to unlock the 7-day mystery jackpot!</p>
+              </div>
+            </div>
+            <span class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 font-bold text-xs font-mono">
+              Day 1 / 7 Active
+            </span>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 pt-2">
+            <!-- Day 1 -->
+            <div onclick="claimDayStreak(1, 15)" id="streakDay-1" class="rounded-2xl p-4 border border-amber-500/40 bg-amber-500/10 text-center cursor-pointer hover:scale-105 transition shadow-sm relative overflow-hidden">
+              <span class="text-[10px] font-black uppercase text-amber-400 tracking-wider">Day 1</span>
+              <div class="w-10 h-10 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-base mx-auto my-2">
+                <i class="fa-solid fa-coins"></i>
+              </div>
+              <span class="text-xs font-black text-emerald-400 font-mono block">+৳ 15.00</span>
+              <span class="text-[9px] font-bold text-slate-400 block mt-0.5">+50 XP</span>
+            </div>
+
+            <!-- Day 2 -->
+            <div onclick="claimDayStreak(2, 20)" id="streakDay-2" class="rounded-2xl p-4 border border-slate-800 bg-slate-900/60 text-center cursor-pointer hover:border-slate-700 transition">
+              <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider">Day 2</span>
+              <div class="w-10 h-10 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center text-base mx-auto my-2">
+                <i class="fa-solid fa-coins"></i>
+              </div>
+              <span class="text-xs font-black text-slate-300 font-mono block">+৳ 20.00</span>
+              <span class="text-[9px] font-bold text-slate-500 block mt-0.5">+75 XP</span>
+            </div>
+
+            <!-- Day 3 -->
+            <div onclick="claimDayStreak(3, 30)" id="streakDay-3" class="rounded-2xl p-4 border border-slate-800 bg-slate-900/60 text-center cursor-pointer hover:border-slate-700 transition">
+              <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider">Day 3</span>
+              <div class="w-10 h-10 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center text-base mx-auto my-2">
+                <i class="fa-solid fa-coins"></i>
+              </div>
+              <span class="text-xs font-black text-slate-300 font-mono block">+৳ 30.00</span>
+              <span class="text-[9px] font-bold text-slate-500 block mt-0.5">+100 XP</span>
+            </div>
+
+            <!-- Day 4 -->
+            <div onclick="claimDayStreak(4, 40)" id="streakDay-4" class="rounded-2xl p-4 border border-slate-800 bg-slate-900/60 text-center cursor-pointer hover:border-slate-700 transition">
+              <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider">Day 4</span>
+              <div class="w-10 h-10 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center text-base mx-auto my-2">
+                <i class="fa-solid fa-gem"></i>
+              </div>
+              <span class="text-xs font-black text-slate-300 font-mono block">+৳ 40.00</span>
+              <span class="text-[9px] font-bold text-slate-500 block mt-0.5">+150 XP</span>
+            </div>
+
+            <!-- Day 5 -->
+            <div onclick="claimDayStreak(5, 55)" id="streakDay-5" class="rounded-2xl p-4 border border-slate-800 bg-slate-900/60 text-center cursor-pointer hover:border-slate-700 transition">
+              <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider">Day 5</span>
+              <div class="w-10 h-10 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center text-base mx-auto my-2">
+                <i class="fa-solid fa-gem"></i>
+              </div>
+              <span class="text-xs font-black text-slate-300 font-mono block">+৳ 55.00</span>
+              <span class="text-[9px] font-bold text-slate-500 block mt-0.5">+200 XP</span>
+            </div>
+
+            <!-- Day 6 -->
+            <div onclick="claimDayStreak(6, 75)" id="streakDay-6" class="rounded-2xl p-4 border border-slate-800 bg-slate-900/60 text-center cursor-pointer hover:border-slate-700 transition">
+              <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider">Day 6</span>
+              <div class="w-10 h-10 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center text-base mx-auto my-2">
+                <i class="fa-solid fa-gift"></i>
+              </div>
+              <span class="text-xs font-black text-slate-300 font-mono block">+৳ 75.00</span>
+              <span class="text-[9px] font-bold text-slate-500 block mt-0.5">+250 XP</span>
+            </div>
+
+            <!-- Day 7 Mystery Mega Box -->
+            <div onclick="claimDayStreak(7, 150)" id="streakDay-7" class="rounded-2xl p-4 border border-indigo-500/40 bg-gradient-to-tr from-indigo-950/80 to-purple-900/60 text-center cursor-pointer hover:scale-105 transition shadow-lg relative overflow-hidden">
+              <span class="text-[10px] font-black uppercase text-amber-300 tracking-wider flex items-center justify-center gap-1">
+                <i class="fa-solid fa-crown text-[9px]"></i> Day 7
+              </span>
+              <div class="w-10 h-10 rounded-full bg-amber-400/20 text-amber-300 flex items-center justify-center text-base mx-auto my-2 animate-bounce">
+                <i class="fa-solid fa-box-open"></i>
+              </div>
+              <span class="text-xs font-black text-amber-300 font-mono block">+৳ 150.00</span>
+              <span class="text-[9px] font-bold text-amber-200/80 block mt-0.5">Mega Jackpot</span>
+            </div>
+          </div>
+        </div>
+
+
+<!-- Cooperate Banner (Daily Challenge $100 Banner) -->
         <div onclick="switchTab('challenge')" class="rounded-3xl p-6 sm:p-7 bg-gradient-to-r from-indigo-900 via-indigo-800 to-purple-900 text-white shadow-xl cursor-pointer hover:opacity-95 transition flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <span class="px-3 py-1 rounded-full bg-white/10 text-amber-300 border border-white/15 text-xs font-bold mb-2 inline-block">
@@ -1256,7 +1378,134 @@
     </div>
   </div>
 
-  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  
+  <!-- 5. TRANSACTION LEDGER & HISTORY MODAL -->
+  <div id="ledgerModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="card-3d-luxury rounded-3xl p-6 sm:p-7 max-w-2xl w-full shadow-2xl border border-slate-700 max-h-[85vh] flex flex-col relative">
+      <button onclick="closeModal('ledgerModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white p-1">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xl font-black border border-indigo-500/30">
+          <i class="fa-solid fa-receipt"></i>
+        </div>
+        <div>
+          <h3 class="font-black text-lg text-white">Transaction History</h3>
+          <p class="text-xs text-slate-400">All deposits, withdrawals, and task reward logs.</p>
+        </div>
+      </div>
+
+      <!-- Filter Subtabs -->
+      <div class="flex items-center gap-2 border-b border-slate-800 pb-3 text-xs font-bold">
+        <button onclick="filterLedger('all')" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white">All Records</button>
+        <button onclick="filterLedger('withdraw')" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white">Withdrawals</button>
+        <button onclick="filterLedger('earning')" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white">Earnings</button>
+      </div>
+
+      <!-- Transactions List -->
+      <div class="flex-1 overflow-y-auto custom-scroll mt-4 space-y-2.5 pr-1">
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-pink-500/10 text-pink-400 flex items-center justify-center text-sm font-bold border border-pink-500/20">
+              <i class="fa-solid fa-money-bill-transfer"></i>
+            </div>
+            <div>
+              <h5 class="font-extrabold text-xs text-white">bKash Cashout Request</h5>
+              <span class="text-[10px] text-slate-400">Account: 01738291029 • Today, 13:42</span>
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="text-xs font-black text-rose-400 font-mono block">-৳ 100.00</span>
+            <span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-400 text-[9px] font-black">Processing</span>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-sm font-bold border border-emerald-500/20">
+              <i class="fa-solid fa-fire"></i>
+            </div>
+            <div>
+              <h5 class="font-extrabold text-xs text-white">Daily Streak Bonus Day 1</h5>
+              <span class="text-[10px] text-slate-400">Streak Reward • Today, 13:20</span>
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="text-xs font-black text-emerald-400 font-mono block">+৳ 15.00</span>
+            <span class="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 text-[9px] font-black">Completed</span>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-sm font-bold border border-indigo-500/20">
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <div>
+              <h5 class="font-extrabold text-xs text-white">TikTok Lite App Install</h5>
+              <span class="text-[10px] text-slate-400">Task Offer • Yesterday, 19:15</span>
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="text-xs font-black text-emerald-400 font-mono block">+৳ 85.00</span>
+            <span class="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 text-[9px] font-black">Completed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- 6. HELP & FAQ MODAL -->
+  <div id="faqModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="card-3d-luxury rounded-3xl p-6 sm:p-7 max-w-2xl w-full shadow-2xl border border-slate-700 max-h-[85vh] flex flex-col relative">
+      <button onclick="closeModal('faqModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white p-1">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-xl font-black border border-amber-500/30">
+          <i class="fa-solid fa-circle-question"></i>
+        </div>
+        <div>
+          <h3 class="font-black text-lg text-white">Frequently Asked Questions & Help</h3>
+          <p class="text-xs text-slate-400">Learn how to maximize your earnings and cashout safely.</p>
+        </div>
+      </div>
+
+      <div class="flex-1 overflow-y-auto custom-scroll space-y-3 pr-1 text-xs">
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+          <h4 class="font-black text-sm text-white mb-1">How fast are bKash & Nagad cashouts processed?</h4>
+          <p class="text-slate-400 leading-relaxed">Local Bangladeshi withdrawals via bKash, Nagad, and Rocket are reviewed and sent within 15 minutes to 2 hours directly to your personal number.</p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+          <h4 class="font-black text-sm text-white mb-1">What is the minimum withdrawal amount?</h4>
+          <p class="text-slate-400 leading-relaxed">The minimum cashout for bKash, Nagad, and Rocket is only ৳ 100 BDT. For Binance Pay (USDT) and Litecoin, it is $1.00 USD (৳ 120 BDT) with zero transaction fees.</p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+          <h4 class="font-black text-sm text-white mb-1">Can I use VPN or Proxies?</h4>
+          <p class="text-slate-400 leading-relaxed">No. All partner offerwalls (CPX, BitLabs, AdGate, Timewall) have strict anti-fraud detection. Using a VPN, Tor, or bot will result in account suspension and chargebacks.</p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+          <h4 class="font-black text-sm text-white mb-1">How does the 8% Affiliate Program work?</h4>
+          <p class="text-slate-400 leading-relaxed">Whenever someone signs up using your personal referral link, you automatically earn 8% of all task and survey earnings they generate for life, credited in real-time.</p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+          <h4 class="font-black text-sm text-white mb-1">What are Level Up perks?</h4>
+          <p class="text-slate-400 leading-relaxed">As you earn XP by completing offers, your Level increases from Lv.0 up to Lv.5 VIP. Higher levels unlock up to +10% bonus payouts on every offer and higher daily challenge prizes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
     let appState = {
       balanceBDT: 0.246,
@@ -1286,6 +1535,7 @@
       appState.currency = c;
       document.getElementById('currencyDropdown').classList.add('hidden');
       renderHeaderBalance();
+    setTimeout(initCharts, 200);
     }
 
     function setLang(code, flag, text) {
@@ -1364,6 +1614,7 @@
       if (confirm('Start survey with ' + provider + '? Estimated reward: ৳ 45.00 BDT.')) {
         appState.balanceBDT += 45.0;
         renderHeaderBalance();
+    setTimeout(initCharts, 200);
         if (window.confetti) confetti();
         alert('Survey complete! ৳ 45.00 added to your Main Balance.');
       }
@@ -1399,6 +1650,7 @@
     function claimAdReward() {
       appState.balanceBDT += appState.activeAdReward;
       renderHeaderBalance();
+    setTimeout(initCharts, 200);
       closeModal('adTimerModal');
       alert('Reward of ৳ ' + appState.activeAdReward.toFixed(3) + ' credited to your account!');
     }
@@ -1422,6 +1674,47 @@
       });
     }
 
+    
+    function initCharts() {
+      const ctx = document.getElementById('dashboardEarningChart');
+      if (!ctx) return;
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          datasets: [{
+            label: 'Daily Earnings (৳ BDT)',
+            data: [45.2, 68.0, 92.5, 54.0, 110.5, 145.0, 246.5],
+            borderColor: '#6366f1',
+            backgroundColor: 'rgba(99, 102, 241, 0.15)',
+            borderWidth: 3,
+            fill: true,
+            tension: 0.35,
+            pointBackgroundColor: '#10b981',
+            pointBorderColor: '#ffffff',
+            pointRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            x: {
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
+              ticks: { color: '#94a3b8', font: { family: 'Plus Jakarta Sans', size: 10 } }
+            },
+            y: {
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
+              ticks: { color: '#94a3b8', font: { family: 'Space Grotesk', size: 10 } }
+            }
+          }
+        }
+      });
+    }
+
     // Live Server Clock
     setInterval(() => {
       const now = new Date();
@@ -1432,6 +1725,7 @@
     }, 1000);
 
     renderHeaderBalance();
+    setTimeout(initCharts, 200);
   </script>
 </body>
 </html>
