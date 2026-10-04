@@ -2,21 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>RewardJoy | Next-Gen Earning & Rewards Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <title>RewardJoy | Professional Rewards & Earning OS</title>
   
-  <!-- Google Fonts -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   
-  <!-- Font Awesome 6.5 -->
+  <!-- FontAwesome 6.5 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Canvas Confetti CDN -->
+  <!-- Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <script>
@@ -28,19 +28,15 @@
             sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
           },
           colors: {
-            brand: {
-              50: '#eef2ff',
-              100: '#e0e7ff',
-              500: '#6366f1',
-              600: '#4f46e5',
-              700: '#4338ca',
-              purple: '#5d50c6',
-              navy: '#1e1b4b',
-              dark: '#0f172a'
-            },
-            reward: {
+            rj: {
+              brand: '#4f46e5',
+              brandLight: '#6366f1',
+              darkBg: '#0b1120',
+              darkCard: '#111827',
+              darkBorder: '#1f293d',
               gold: '#f59e0b',
               emerald: '#10b981',
+              cyan: '#06b6d4',
               coral: '#f43f5e'
             }
           }
@@ -50,10 +46,7 @@
   </script>
 
   <style>
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: #f4f6fb;
@@ -61,103 +54,107 @@
       margin: 0;
       padding: 0;
     }
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+    .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
+
+    /* RewardJoy Exact Sidebar Item Style */
+    .rj-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #475569;
+      transition: all 0.15s ease;
+      cursor: pointer;
     }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 9999px;
-    }
-    .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #334155;
-    }
+    .dark .rj-nav-item { color: #94a3b8; }
+    .rj-nav-item:hover { background: #f1f5f9; color: #1e293b; }
+    .dark .rj-nav-item:hover { background: #1e293b; color: #f8fafc; }
     
-    /* Active sidebar item */
-    .sidebar-nav-item.active {
+    .rj-nav-item.active {
       background: #eff2fe;
       color: #4f46e5;
       font-weight: 700;
       border-right: 3px solid #4f46e5;
     }
-    .dark .sidebar-nav-item.active {
+    .dark .rj-nav-item.active {
       background: #1e2337;
       color: #818cf8;
       border-right: 3px solid #818cf8;
     }
 
-    /* Modal Backdrop */
-    .modal-backdrop {
-      background: rgba(15, 23, 42, 0.65);
-      backdrop-filter: blur(4px);
+    /* Podium Heights */
+    .podium-1 { height: 180px; }
+    .podium-2 { height: 150px; }
+    .podium-3 { height: 130px; }
+
+    /* Toggle switches */
+    .toggle-pill.active {
+      background: #4f46e5;
+      color: #ffffff;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col bg-[#f4f6fb] dark:bg-[#0a0f1d] dark:text-slate-100 transition-colors duration-200">
+<body class="min-h-screen flex flex-col bg-[#f4f6fb] dark:bg-[#0b1120] dark:text-slate-100 transition-colors duration-200">
 
-  <!-- ================= TOP HEADER NAV ================= -->
-  <header class="sticky top-0 z-40 w-full bg-white dark:bg-[#111827] border-b border-slate-200 dark:border-slate-800 shadow-xs">
+  <!-- ================= TOP HEADER (Exact RewardJoy Layout) ================= -->
+  <header class="sticky top-0 z-40 w-full bg-white dark:bg-[#111827] border-b border-slate-200 dark:border-slate-800 shadow-2xs">
     <div class="max-w-[1600px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
       
       <!-- Left: Mobile Menu Toggle & Brand Logo -->
-      <div class="flex items-center gap-3 sm:gap-4">
-        <button id="mobileMenuBtn" onclick="toggleMobileSidebar()" class="lg:hidden p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-hidden">
+      <div class="flex items-center gap-3">
+        <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-hidden">
           <i class="fa-solid fa-bars text-lg"></i>
         </button>
-        
+
         <a href="#" onclick="switchTab('dashboard')" class="flex items-center gap-2 group">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
-            <i class="fa-solid fa-coins text-lg"></i>
-          </div>
-          <div class="flex flex-col">
-            <span class="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-1">
-              Reward<span class="text-brand-600 dark:text-indigo-400">Joy</span>
+          <button type="button" class="text-xl sm:text-2xl font-black text-brand-600 dark:text-indigo-400 tracking-tight flex items-center gap-1.5 focus:outline-hidden">
+            <span class="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-sm shadow-md shadow-indigo-500/20">
+              <i class="fa-solid fa-gem"></i>
             </span>
-          </div>
+            <span>Reward<span class="text-slate-900 dark:text-white">Joy</span></span>
+          </button>
         </a>
       </div>
 
-      <!-- Center: Live Earning Stream Ticker (Desktop) -->
-      <div class="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 text-xs">
-        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span class="font-bold text-slate-500 dark:text-slate-400">Live Payout:</span>
-        <div id="tickerBox" class="font-semibold text-slate-700 dark:text-slate-200 transition-all duration-300">
-          Tanvir withdrew ৳500 via bKash 2m ago
-        </div>
-      </div>
-
-      <!-- Right Header Actions -->
+      <!-- Right Header Actions (Language, Currency, Balance Box, Profile) -->
       <div class="flex items-center gap-2 sm:gap-3.5">
         
-        <!-- Language Selector -->
+        <!-- Language Trigger -->
         <div class="relative">
           <button onclick="toggleDropdown('langDropdown')" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/60 text-xs font-semibold text-slate-700 dark:text-slate-200 transition">
-            <span id="currentLangFlag">🇺🇸</span>
+            <span id="currentFlag">🇺🇸</span>
             <span id="currentLangText" class="hidden sm:inline">English</span>
-            <i class="fa-solid fa-angle-down text-[10px] text-slate-400"></i>
+            <span class="text-[10px] text-slate-400 font-mono">en</span>
+            <i class="fa-solid fa-angle-down text-[10px] text-slate-400 ml-0.5"></i>
           </button>
           
           <div id="langDropdown" class="hidden absolute right-0 mt-2 w-36 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 py-1.5 z-50">
-            <button onclick="setLanguage('en', '🇺🇸 English')" class="w-full text-left px-3.5 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-2">
-              <span>🇺🇸</span> English (EN)
+            <button onclick="setLang('en', '🇺🇸', 'English')" class="w-full text-left px-3.5 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-2">
+              <span>🇺🇸</span> English
             </button>
-            <button onclick="setLanguage('bn', '🇧🇩 বাংলা')" class="w-full text-left px-3.5 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-2">
-              <span>🇧🇩</span> বাংলা (BN)
+            <button onclick="setLang('bn', '🇧🇩', 'বাংলা')" class="w-full text-left px-3.5 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-2">
+              <span>🇧🇩</span> বাংলা
             </button>
           </div>
         </div>
 
-        <!-- Currency Switcher (BDT / USD) -->
+        <!-- Currency Switcher Trigger (৳ BDT) -->
         <div class="relative">
-          <button onclick="toggleDropdown('currencyDropdown')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/60 text-xs font-bold text-slate-700 dark:text-slate-200 transition shadow-2xs">
-            <span id="currentCurrencyLabel" class="text-emerald-600 dark:text-emerald-400">৳ BDT</span>
+          <button onclick="toggleDropdown('currencyDropdown')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/60 text-xs font-bold text-slate-700 dark:text-slate-200 transition">
+            <span id="currencyTriggerText" class="text-emerald-600 dark:text-emerald-400 font-black">৳ BDT</span>
+            <i class="fa-solid fa-coins text-amber-500 text-[11px]"></i>
             <i class="fa-solid fa-angle-down text-[10px] text-slate-400"></i>
           </button>
 
-          <div id="currencyDropdown" class="hidden absolute right-0 mt-2 w-32 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 py-1.5 z-50">
+          <div id="currencyDropdown" class="hidden absolute right-0 mt-2 w-36 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 py-1.5 z-50">
             <button onclick="setCurrency('BDT')" class="w-full text-left px-3.5 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-between">
               <span>৳ BDT</span>
-              <span class="text-[10px] text-slate-400">Bangladeshi</span>
+              <span class="text-[10px] text-slate-400">বাংলা</span>
             </button>
             <button onclick="setCurrency('USD')" class="w-full text-left px-3.5 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-between">
               <span>$ USD</span>
@@ -166,23 +163,18 @@
           </div>
         </div>
 
-        <!-- User Balance Box with Quick Cashout Modal trigger -->
+        <!-- User Balance Box with Cashout & Deposit Modal Trigger -->
         <div class="relative">
-          <button onclick="toggleDropdown('balanceMenuDropdown')" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800/80 hover:bg-indigo-100/70 transition">
-            <div class="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-black">
+          <button onclick="toggleDropdown('balanceDropdown')" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+            <div class="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[11px] font-bold">
               <span id="headerCurrencyIcon">৳</span>
             </div>
-            <span id="headerBalanceText" class="font-extrabold text-sm text-slate-900 dark:text-white">৳ 246.50</span>
-            <i class="fa-solid fa-angle-down text-[10px] text-indigo-400"></i>
+            <span id="headerBalance" class="font-extrabold text-sm text-slate-900 dark:text-white">৳ 0.246</span>
           </button>
 
-          <div id="balanceMenuDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 p-2 z-50">
-            <div class="px-3 py-2 border-b border-slate-100 dark:border-slate-700/80 mb-1">
-              <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">Available Balance</span>
-              <span id="dropdownBalanceText" class="text-base font-extrabold text-emerald-600 dark:text-emerald-400">৳ 246.50</span>
-            </div>
+          <div id="balanceDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-2 z-50">
             <button onclick="openCashoutModal()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 rounded-xl flex items-center gap-2.5 transition text-emerald-600 dark:text-emerald-400">
-              <i class="fa-solid fa-money-bill-transfer"></i> Cashout (বিকাশ/নগদ)
+              <i class="fa-solid fa-money-bill-transfer"></i> Cashout
             </button>
             <button onclick="openDepositModal()" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 rounded-xl flex items-center gap-2.5 transition">
               <i class="fa-solid fa-wallet text-indigo-500"></i> Deposit
@@ -190,120 +182,75 @@
           </div>
         </div>
 
-        <!-- Dark/Light Mode Toggle -->
-        <button onclick="toggleDarkMode()" class="p-2 w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-amber-400 flex items-center justify-center transition">
+        <!-- Dark Mode Switch -->
+        <button onclick="toggleTheme()" class="p-2 w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-amber-400 flex items-center justify-center transition">
           <i id="themeIcon" class="fa-solid fa-moon"></i>
         </button>
 
-        <!-- User Profile Avatar -->
-        <div class="relative">
-          <button onclick="toggleDropdown('profileDropdown')" class="flex items-center gap-2 focus:outline-hidden">
-            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 p-[2px] shadow-sm">
-              <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Maruf" alt="User Avatar" class="w-full h-full rounded-[10px] bg-slate-100 dark:bg-slate-800 object-cover" />
-            </div>
-          </button>
-
-          <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-52 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-2 z-50">
-            <div class="px-3 py-2.5 border-b border-slate-100 dark:border-slate-700/80">
-              <p class="font-extrabold text-sm text-slate-900 dark:text-white">marufbeo360</p>
-              <div class="flex items-center gap-1.5 mt-0.5">
-                <span class="px-2 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-400 font-extrabold text-[10px]">Lv.0 Member</span>
-                <span class="text-[10px] text-slate-400 font-medium">Standard</span>
-              </div>
-            </div>
-            <div class="py-1">
-              <button onclick="switchTab('affiliate')" class="w-full text-left px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/60 rounded-xl flex items-center gap-2">
-                <i class="fa-solid fa-user-group text-slate-400"></i> My Referrals
-              </button>
-              <button onclick="openAdBlockerModal()" class="w-full text-left px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/60 rounded-xl flex items-center gap-2">
-                <i class="fa-solid fa-shield-halved text-rose-500"></i> AdBlocker Info
-              </button>
-            </div>
-          </div>
-        </div>
+        <!-- User Photo / Profile Avatar -->
+        <button onclick="switchTab('profile')" class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 p-[2px] shadow-xs active:scale-95 transition focus:outline-hidden">
+          <img src="https://api.dicebear.com/7.x/bottts/svg?seed=marufbeo360" alt="Avatar" class="w-full h-full rounded-[10px] bg-slate-100 dark:bg-slate-800 object-cover" />
+        </button>
 
       </div>
     </div>
   </header>
 
-  <!-- ================= MAIN APP BODY WITH SIDEBAR ================= -->
+  <!-- ================= MAIN BODY CONTAINER ================= -->
   <div class="flex-1 max-w-[1600px] w-full mx-auto flex overflow-hidden">
     
     <!-- ================= SIDEBAR NAVIGATION ================= -->
     <aside id="sidebar" class="fixed inset-y-0 left-0 z-30 w-64 bg-white dark:bg-[#111827] border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between transform -translate-x-full lg:translate-x-0 lg:static transition-transform duration-200 ease-in-out pt-16 lg:pt-0">
       
-      <!-- Sidebar Navigation Links -->
-      <div class="p-4 space-y-1.5 overflow-y-auto custom-scrollbar flex-1">
+      <div class="p-4 space-y-1 overflow-y-auto custom-scrollbar flex-1">
         
-        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="sidebar-nav-item active w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition">
-          <div class="flex items-center gap-3">
-            <i class="fa-solid fa-chart-pie text-base w-5 text-center text-brand-600 dark:text-indigo-400"></i>
-            <span>Dashboard</span>
-          </div>
-        </button>
+        <div onclick="switchTab('dashboard')" id="nav-dashboard" class="rj-nav-item active">
+          <i class="fa-solid fa-chart-pie w-5 text-center text-base"></i>
+          <span>Dashboard</span>
+        </div>
 
-        <button onclick="switchTab('offers')" id="nav-offers" class="sidebar-nav-item w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition">
-          <div class="flex items-center gap-3">
-            <i class="fa-solid fa-gamepad text-base w-5 text-center text-rose-500"></i>
-            <span>Offers & Tasks</span>
-          </div>
-          <span class="px-2 py-0.5 text-[10px] font-black rounded-full bg-rose-500/10 text-rose-600 dark:text-rose-400">HOT</span>
-        </button>
+        <div onclick="switchTab('offers')" id="nav-offers" class="rj-nav-item">
+          <i class="fa-solid fa-gamepad w-5 text-center text-base"></i>
+          <span>Offers</span>
+        </div>
 
-        <button onclick="switchTab('surveys')" id="nav-surveys" class="sidebar-nav-item w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition">
-          <div class="flex items-center gap-3">
-            <i class="fa-solid fa-square-poll-vertical text-base w-5 text-center text-amber-500"></i>
-            <span>Surveys</span>
-          </div>
-          <span class="px-2 py-0.5 text-[10px] font-black rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400">HIGH</span>
-        </button>
+        <div onclick="switchTab('surveys')" id="nav-surveys" class="rj-nav-item">
+          <i class="fa-solid fa-square-poll-vertical w-5 text-center text-base"></i>
+          <span>Surveys</span>
+        </div>
 
-        <button onclick="switchTab('browsing')" id="nav-browsing" class="sidebar-nav-item w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition">
-          <div class="flex items-center gap-3">
-            <i class="fa-solid fa-arrow-pointer text-base w-5 text-center text-emerald-500"></i>
-            <span>Browsing (PTC Ads)</span>
-          </div>
-          <span class="px-2 py-0.5 text-[10px] font-black rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">12 Ads</span>
-        </button>
+        <div onclick="switchTab('browsing')" id="nav-browsing" class="rj-nav-item">
+          <i class="fa-solid fa-arrow-pointer w-5 text-center text-base"></i>
+          <span>Browsing</span>
+        </div>
 
-        <button onclick="switchTab('cashout')" id="nav-cashout" class="sidebar-nav-item w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition">
-          <div class="flex items-center gap-3">
-            <i class="fa-solid fa-money-bill-transfer text-base w-5 text-center text-indigo-500"></i>
-            <span>Cashout / Withdraw</span>
-          </div>
-          <span class="px-2 py-0.5 text-[10px] font-black rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">bKash</span>
-        </button>
+        <div onclick="switchTab('advertise')" id="nav-advertise" class="rj-nav-item">
+          <i class="fa-solid fa-bullhorn w-5 text-center text-base"></i>
+          <span>Advertise</span>
+        </div>
 
-        <button onclick="switchTab('affiliate')" id="nav-affiliate" class="sidebar-nav-item w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition">
-          <div class="flex items-center gap-3">
-            <i class="fa-solid fa-users-line text-base w-5 text-center text-cyan-500"></i>
-            <span>Affiliate</span>
-          </div>
-          <span class="text-[10px] font-bold text-cyan-600 dark:text-cyan-400">10%</span>
-        </button>
+        <div onclick="switchTab('affiliate')" id="nav-affiliate" class="rj-nav-item">
+          <i class="fa-solid fa-users-line w-5 text-center text-base"></i>
+          <span>Affiliate</span>
+        </div>
 
-        <button onclick="switchTab('challenge')" id="nav-challenge" class="sidebar-nav-item w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition">
-          <div class="flex items-center gap-3">
-            <i class="fa-solid fa-trophy text-base w-5 text-center text-yellow-500"></i>
-            <span>Challenge</span>
-          </div>
-          <span class="px-2 py-0.5 text-[10px] font-black rounded-full bg-yellow-500/10 text-yellow-600 dark:text-yellow-400">$100</span>
-        </button>
+        <div onclick="switchTab('challenge')" id="nav-challenge" class="rj-nav-item">
+          <i class="fa-solid fa-trophy w-5 text-center text-base"></i>
+          <span>Challenge</span>
+        </div>
 
-        <button onclick="switchTab('advertise')" id="nav-advertise" class="sidebar-nav-item w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition">
-          <div class="flex items-center gap-3">
-            <i class="fa-solid fa-bullhorn text-base w-5 text-center text-purple-500"></i>
-            <span>Advertise</span>
-          </div>
-        </button>
+        <div onclick="switchTab('profile')" id="nav-profile" class="rj-nav-item">
+          <i class="fa-solid fa-user-gear w-5 text-center text-base"></i>
+          <span>Profile & Setting</span>
+        </div>
 
       </div>
 
-      <!-- Sidebar Footer: Server Time & Promo -->
-      <div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 space-y-3">
+      <!-- Sidebar Footer: Server Live Time -->
+      <div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
         <div class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 text-[11px] font-mono text-slate-500 dark:text-slate-400">
           <i class="fa-regular fa-clock text-indigo-500"></i>
-          <span id="serverTimeClock">2026.10.04 13:50:37</span>
+          <span id="sidebarClock">2026.10.04 07:48:03</span>
         </div>
       </div>
 
@@ -312,57 +259,49 @@
     <!-- Overlay backdrop for mobile sidebar -->
     <div id="sidebarBackdrop" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-slate-900/50 z-20 hidden lg:hidden backdrop-blur-xs"></div>
 
-    <!-- ================= MAIN CONTENT CONTAINER ================= -->
+    <!-- ================= MAIN SECTION VIEWPORT ================= -->
     <main class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto custom-scrollbar">
 
-      <!-- ================= 1. TAB: DASHBOARD (MAIN) ================= -->
-      <div id="tab-dashboard" class="space-y-6">
+      <!-- ================= PAGE 1: DASHBOARD ================= -->
+      <div id="page-dashboard" class="space-y-6">
 
-        <!-- Top Welcome Greeting & Level Header -->
-        <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <!-- Top Greeting Bar -->
+        <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between flex-wrap gap-4">
           <div class="flex items-center gap-4">
             <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-400 to-orange-500 flex items-center justify-center text-white text-2xl shadow-lg shadow-orange-500/20">
               <i class="fa-solid fa-cloud-sun"></i>
             </div>
             <div>
               <div class="flex items-center gap-2 flex-wrap">
-                <h1 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
-                  Good evening, <span class="text-brand-600 dark:text-indigo-400">marufbeo360</span>
-                </h1>
+                <span class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">Good evening,</span>
+                <span class="text-xl sm:text-2xl font-black text-brand-600 dark:text-indigo-400">marufbeo360</span>
                 <span class="px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 text-xs font-black">
                   Lv.0
                 </span>
               </div>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Complete daily offers, surf ads, and claim your rewards easily.
-              </p>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Ready to earn rewards today? Check out new surveys and browsing ads.</p>
             </div>
           </div>
 
-          <!-- Quick Action Buttons -->
-          <div class="flex items-center gap-3 w-full md:w-auto">
-            <button onclick="openCashoutModal()" class="flex-1 md:flex-initial px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-extrabold text-xs shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2 active:scale-95 transition">
-              <i class="fa-solid fa-arrow-down-to-bracket"></i>
+          <div class="flex items-center gap-3">
+            <button onclick="openCashoutModal()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-md shadow-emerald-600/20 active:scale-95 transition flex items-center gap-2">
+              <i class="fa-solid fa-money-bill-transfer"></i>
               <span>Cashout (বিকাশ)</span>
-            </button>
-            <button onclick="claimDailyStreak()" id="streakBtn" class="flex-1 md:flex-initial px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-xs shadow-md shadow-amber-500/20 flex items-center justify-center gap-1.5 active:scale-95 transition">
-              <i class="fa-solid fa-fire"></i>
-              <span>Daily Streak</span>
             </button>
           </div>
         </div>
 
-        <!-- Performance Section (3 Main Cards matching RewardJoy) -->
+        <!-- Performance Section (3 Exact Items) -->
         <div>
           <div class="flex items-center gap-2 mb-3.5">
-            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="Icon" class="w-4 h-4 opacity-80" />
-            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Performance</h2>
+            <i class="fa-solid fa-gauge-high text-slate-400 text-xs"></i>
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Performance</h2>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
             
-            <!-- 1. Main Balance Card -->
-            <div class="bg-white dark:bg-[#111827] rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between hover:border-slate-300 dark:hover:border-slate-700 transition">
+            <!-- Main Balance -->
+            <div class="bg-white dark:bg-[#111827] rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between">
               <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
                 <div class="flex items-center gap-2.5">
                   <div class="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-sm font-bold">
@@ -370,24 +309,19 @@
                   </div>
                   <span class="text-xs font-bold text-slate-700 dark:text-slate-300">Main Balance</span>
                 </div>
-                <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950 px-2 py-0.5 rounded-md">Withdrawable</span>
               </div>
 
-              <div class="my-5 flex items-baseline justify-between">
-                <div>
-                  <h3 id="cardMainBalance" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">৳ 246.50</h3>
-                  <span id="cardMainBalanceUSD" class="text-xs text-slate-400 font-semibold">$2.05 USD</span>
-                </div>
+              <div class="my-5">
+                <h3 id="cardBalanceMain" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">৳ 0.246</h3>
               </div>
 
-              <button onclick="openCashoutModal()" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs flex items-center justify-center gap-2 active:scale-98 transition shadow-xs">
-                <i class="fa-solid fa-money-bill-transfer"></i>
-                <span>Cashout</span>
+              <button onclick="openCashoutModal()" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs flex items-center justify-center gap-2 active:scale-98 transition">
+                <i class="fa-solid fa-money-bill-transfer"></i> Cashout
               </button>
             </div>
 
-            <!-- 2. Purchase Balance Card -->
-            <div class="bg-white dark:bg-[#111827] rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between hover:border-slate-300 dark:hover:border-slate-700 transition">
+            <!-- Purchase Balance -->
+            <div class="bg-white dark:bg-[#111827] rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between">
               <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
                 <div class="flex items-center gap-2.5">
                   <div class="w-8 h-8 rounded-xl bg-brand-50 dark:bg-indigo-950/60 text-brand-600 dark:text-indigo-400 flex items-center justify-center text-sm font-bold">
@@ -395,24 +329,19 @@
                   </div>
                   <span class="text-xs font-bold text-slate-700 dark:text-slate-300">Purchase Balance</span>
                 </div>
-                <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 dark:bg-indigo-950 px-2 py-0.5 rounded-md">For Ads</span>
               </div>
 
-              <div class="my-5 flex items-baseline justify-between">
-                <div>
-                  <h3 id="cardPurchaseBalance" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">৳ 0.00</h3>
-                  <span id="cardPurchaseBalanceUSD" class="text-xs text-slate-400 font-semibold">$0.00 USD</span>
-                </div>
+              <div class="my-5">
+                <h3 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">৳ 0.000</h3>
               </div>
 
               <button onclick="openDepositModal()" class="w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-extrabold text-xs flex items-center justify-center gap-2 active:scale-98 transition">
-                <i class="fa-solid fa-plus-circle"></i>
-                <span>Deposit</span>
+                <i class="fa-solid fa-plus-circle"></i> Deposit
               </button>
             </div>
 
-            <!-- 3. Referrals Card -->
-            <div class="bg-white dark:bg-[#111827] rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between hover:border-slate-300 dark:hover:border-slate-700 transition">
+            <!-- Referrals -->
+            <div class="bg-white dark:bg-[#111827] rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between">
               <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
                 <div class="flex items-center gap-2.5">
                   <div class="w-8 h-8 rounded-xl bg-cyan-50 dark:bg-cyan-950/60 text-cyan-600 dark:text-cyan-400 flex items-center justify-center text-sm font-bold">
@@ -420,639 +349,755 @@
                   </div>
                   <span class="text-xs font-bold text-slate-700 dark:text-slate-300">Referrals</span>
                 </div>
-                <span class="text-[10px] font-bold text-cyan-600 bg-cyan-50 dark:bg-cyan-950 px-2 py-0.5 rounded-md">10% Rebate</span>
               </div>
 
-              <div class="my-5 flex items-baseline justify-between">
-                <div>
-                  <h3 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">0</h3>
-                  <span class="text-xs text-slate-400 font-semibold">Earned: ৳ 0.00</span>
-                </div>
+              <div class="my-5">
+                <h3 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">0</h3>
               </div>
 
               <button onclick="switchTab('affiliate')" class="w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-extrabold text-xs flex items-center justify-center gap-2 active:scale-98 transition">
-                <i class="fa-solid fa-chart-line"></i>
-                <span>Statistics</span>
+                <i class="fa-solid fa-chart-line"></i> Statistics
               </button>
             </div>
 
           </div>
         </div>
 
-        <!-- Level Up Card (Exact layout & warm gradient from RewardJoy) -->
+        <!-- Level Up Card (Exact RewardJoy Warm Gold Gradient) -->
         <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs">
           <div class="flex items-center gap-2 mb-3">
-            <i class="fa-solid fa-star text-amber-500 text-sm"></i>
-            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Level Up</h2>
+            <i class="fa-solid fa-star text-amber-500 text-xs"></i>
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Level Up</h2>
           </div>
 
           <div class="rounded-2xl p-5 border border-amber-200/80 dark:border-amber-800/40 relative overflow-hidden" style="background: linear-gradient(0deg, rgb(241, 228, 203) 0%, rgb(255, 246, 239) 100%);">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-slate-800">
+            <div class="flex items-center justify-between text-slate-800">
               <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-xl bg-amber-500 text-white flex items-center justify-center text-lg font-black shadow-md shadow-amber-500/30">
-                  Lv.0
-                </div>
+                <span class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center font-black text-sm shadow-md">Lv.0</span>
                 <div>
-                  <h4 class="font-extrabold text-base text-slate-900">Novice Earner</h4>
-                  <p class="text-xs text-slate-600 font-medium"><span id="levelCoinsLeft" class="font-bold text-amber-700">1,000</span> coins to level up to Lv.1</p>
+                  <h4 class="font-bold text-sm text-slate-900">Novice Tier</h4>
+                  <p class="text-xs text-slate-600 font-medium"><span>1000</span> coins to level up</p>
                 </div>
               </div>
-              <div class="text-left sm:text-right">
-                <span class="text-xs font-bold text-slate-500">Tier Perk:</span>
-                <span class="text-xs font-extrabold text-slate-800 block">+1% Task Bonus on Lv.1</span>
-              </div>
+              <span class="text-xs font-bold text-slate-600">0%</span>
             </div>
 
-            <!-- Progress Bar -->
             <div class="mt-4">
-              <div class="w-full h-3 rounded-full bg-amber-200/80 overflow-hidden p-0.5">
-                <div id="levelProgressBar" class="h-full rounded-full bg-gradient-to-r from-amber-500 to-orange-500 transition-all duration-500" style="width: 15%;"></div>
-              </div>
-              <div class="flex justify-between items-center text-[11px] font-bold text-slate-600 mt-1.5">
-                <span>0 XP</span>
-                <span id="progressText">150 / 1000 XP</span>
-                <span>1000 XP</span>
+              <div class="w-full h-2.5 rounded-full bg-amber-200 overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full" style="width: 0%;"></div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Daily Challenge Banner (Cooperate Banner Section) -->
-        <div class="rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-indigo-900 via-indigo-800 to-purple-900 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
-          <div class="relative z-10 max-w-xl">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-amber-300 border border-white/15 text-xs font-black mb-3">
-              <i class="fa-solid fa-trophy"></i> Daily $100 Challenge
-            </div>
-            <h3 class="text-2xl sm:text-3xl font-black tracking-tight leading-tight">
-              Top the Leaderboard & Win Cash Prizes!
-            </h3>
-            <p class="text-xs sm:text-sm text-indigo-200 mt-2 leading-relaxed">
-              Earn coins by completing offers, surveys, and watching ads today. Top 10 users share the daily ৳12,000 / $100 pool!
-            </p>
-            <div class="mt-4 flex items-center gap-3">
-              <button onclick="switchTab('challenge')" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-900 font-black text-xs shadow-lg shadow-amber-500/30 active:scale-95 transition">
-                View Leaderboard
-              </button>
-              <div class="text-xs text-indigo-200 font-mono flex items-center gap-1.5 bg-black/20 px-3 py-2 rounded-xl">
-                <i class="fa-regular fa-clock"></i> Reset in: <span id="challengeCountdown" class="font-bold text-white">08:14:22</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="relative z-10 flex items-center justify-center">
-            <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-gradient-to-tr from-amber-400 to-yellow-300 p-3 shadow-2xl flex items-center justify-center text-slate-900 text-center animate-bounce duration-1000">
-              <div>
-                <span class="text-xs font-extrabold uppercase tracking-wider block">Pool</span>
-                <span class="text-2xl sm:text-3xl font-black block">$100</span>
-                <span class="text-[11px] font-bold text-slate-700">৳12,000 BDT</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Featured Fast Earning Tasks Grid -->
-        <div>
-          <div class="flex items-center justify-between mb-3.5">
-            <div class="flex items-center gap-2">
-              <i class="fa-solid fa-bolt text-amber-500 text-sm"></i>
-              <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Featured Fast Earners</h2>
-            </div>
-            <button onclick="switchTab('offers')" class="text-xs font-bold text-brand-600 dark:text-indigo-400 hover:underline">
-              See All Offers <i class="fa-solid fa-arrow-right text-[10px]"></i>
-            </button>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            
-            <!-- Task 1 -->
-            <div class="bg-white dark:bg-[#111827] rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-xs hover:border-indigo-400 transition group flex flex-col justify-between">
-              <div>
-                <div class="flex items-center justify-between mb-2.5">
-                  <span class="px-2 py-0.5 rounded-md bg-rose-50 dark:bg-rose-950 text-rose-600 dark:text-rose-400 text-[10px] font-extrabold">App Install</span>
-                  <span class="text-xs font-bold text-slate-400"><i class="fa-brands fa-android"></i> Android</span>
-                </div>
-                <h4 class="font-extrabold text-sm text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-indigo-400 transition">TikTok Lite</h4>
-                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Download & open for 30 seconds.</p>
-              </div>
-              <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                <span class="font-extrabold text-sm text-emerald-600 dark:text-emerald-400">+৳ 85.00</span>
-                <button onclick="completeSimulatedTask('TikTok Lite', 85.00)" class="px-3 py-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white font-extrabold text-xs transition">
-                  Start
-                </button>
-              </div>
-            </div>
-
-            <!-- Task 2 -->
-            <div class="bg-white dark:bg-[#111827] rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-xs hover:border-indigo-400 transition group flex flex-col justify-between">
-              <div>
-                <div class="flex items-center justify-between mb-2.5">
-                  <span class="px-2 py-0.5 rounded-md bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 text-[10px] font-extrabold">Quick Survey</span>
-                  <span class="text-xs font-bold text-slate-400"><i class="fa-solid fa-clock"></i> 5 Mins</span>
-                </div>
-                <h4 class="font-extrabold text-sm text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-indigo-400 transition">CPX Tech Survey</h4>
-                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Answer 5 simple lifestyle questions.</p>
-              </div>
-              <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                <span class="font-extrabold text-sm text-emerald-600 dark:text-emerald-400">+৳ 65.00</span>
-                <button onclick="completeSimulatedTask('CPX Tech Survey', 65.00)" class="px-3 py-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white font-extrabold text-xs transition">
-                  Start
-                </button>
-              </div>
-            </div>
-
-            <!-- Task 3 -->
-            <div class="bg-white dark:bg-[#111827] rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-xs hover:border-indigo-400 transition group flex flex-col justify-between">
-              <div>
-                <div class="flex items-center justify-between mb-2.5">
-                  <span class="px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 text-[10px] font-extrabold">Surf Ads</span>
-                  <span class="text-xs font-bold text-slate-400"><i class="fa-regular fa-eye"></i> 15 Sec</span>
-                </div>
-                <h4 class="font-extrabold text-sm text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-indigo-400 transition">Crypto Faucet Ad</h4>
-                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Browse sponsor page for 15s.</p>
-              </div>
-              <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                <span class="font-extrabold text-sm text-emerald-600 dark:text-emerald-400">+৳ 5.50</span>
-                <button onclick="launchPTCAd('Crypto Faucet Ad', 15, 5.50)" class="px-3 py-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white font-extrabold text-xs transition">
-                  Surf
-                </button>
-              </div>
-            </div>
-
-            <!-- Task 4 -->
-            <div class="bg-white dark:bg-[#111827] rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-xs hover:border-indigo-400 transition group flex flex-col justify-between">
-              <div>
-                <div class="flex items-center justify-between mb-2.5">
-                  <span class="px-2 py-0.5 rounded-md bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-400 text-[10px] font-extrabold">Gaming</span>
-                  <span class="text-xs font-bold text-slate-400"><i class="fa-solid fa-gamepad"></i> Game</span>
-                </div>
-                <h4 class="font-extrabold text-sm text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-indigo-400 transition">Merge Dragons</h4>
-                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Reach Dragon Level 5.</p>
-              </div>
-              <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                <span class="font-extrabold text-sm text-emerald-600 dark:text-emerald-400">+৳ 180.00</span>
-                <button onclick="completeSimulatedTask('Merge Dragons', 180.00)" class="px-3 py-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white font-extrabold text-xs transition">
-                  Start
-                </button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ================= 2. TAB: OFFERS & TASKS ================= -->
-      <div id="tab-offers" class="hidden space-y-6">
-        <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs">
-          <h2 class="text-xl font-black text-slate-900 dark:text-white">Offerwalls & Micro-Tasks</h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Choose your favorite provider or select popular tasks below to earn coins immediately.</p>
-          
-          <!-- Providers Logos Bar -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3 mt-6">
-            <div class="p-3.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-center font-extrabold text-xs text-slate-700 dark:text-slate-200 hover:border-brand-500 cursor-pointer transition">
-              <i class="fa-solid fa-fire text-orange-500 mb-1 block text-base"></i> Timewall
-            </div>
-            <div class="p-3.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-center font-extrabold text-xs text-slate-700 dark:text-slate-200 hover:border-brand-500 cursor-pointer transition">
-              <i class="fa-solid fa-gamepad text-indigo-500 mb-1 block text-base"></i> AdGate Media
-            </div>
-            <div class="p-3.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-center font-extrabold text-xs text-slate-700 dark:text-slate-200 hover:border-brand-500 cursor-pointer transition">
-              <i class="fa-solid fa-gift text-purple-500 mb-1 block text-base"></i> Lootably
-            </div>
-            <div class="p-3.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-center font-extrabold text-xs text-slate-700 dark:text-slate-200 hover:border-brand-500 cursor-pointer transition">
-              <i class="fa-solid fa-bolt text-yellow-500 mb-1 block text-base"></i> CPX Research
-            </div>
-            <div class="p-3.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-center font-extrabold text-xs text-slate-700 dark:text-slate-200 hover:border-brand-500 cursor-pointer transition">
-              <i class="fa-solid fa-gem text-cyan-500 mb-1 block text-base"></i> Revlum
-            </div>
-            <div class="p-3.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-center font-extrabold text-xs text-slate-700 dark:text-slate-200 hover:border-brand-500 cursor-pointer transition">
-              <i class="fa-solid fa-layer-group text-emerald-500 mb-1 block text-base"></i> Monlix
-            </div>
-          </div>
-        </div>
-
-        <!-- Offers List -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div class="bg-white dark:bg-[#111827] rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
-            <div class="flex items-center gap-3.5">
-              <div class="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xl font-bold">
-                <i class="fa-solid fa-mobile-screen"></i>
-              </div>
-              <div>
-                <h4 class="font-extrabold text-sm text-slate-900 dark:text-white">Binance App Signup</h4>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Register & complete basic KYC.</p>
-                <span class="text-xs font-black text-emerald-600 dark:text-emerald-400 mt-1 block">+৳ 350.00</span>
-              </div>
-            </div>
-            <button onclick="completeSimulatedTask('Binance Signup', 350.00)" class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs transition">Claim</button>
-          </div>
-
-          <div class="bg-white dark:bg-[#111827] rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
-            <div class="flex items-center gap-3.5">
-              <div class="w-12 h-12 rounded-xl bg-rose-50 dark:bg-rose-950 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xl font-bold">
-                <i class="fa-solid fa-dice"></i>
-              </div>
-              <div>
-                <h4 class="font-extrabold text-sm text-slate-900 dark:text-white">Ludo King Champions</h4>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Win 3 online matches.</p>
-                <span class="text-xs font-black text-emerald-600 dark:text-emerald-400 mt-1 block">+৳ 120.00</span>
-              </div>
-            </div>
-            <button onclick="completeSimulatedTask('Ludo King', 120.00)" class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs transition">Claim</button>
-          </div>
-
-          <div class="bg-white dark:bg-[#111827] rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
-            <div class="flex items-center gap-3.5">
-              <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl font-bold">
-                <i class="fa-solid fa-cart-shopping"></i>
-              </div>
-              <div>
-                <h4 class="font-extrabold text-sm text-slate-900 dark:text-white">Daraz Shopping App</h4>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Install & create a new user account.</p>
-                <span class="text-xs font-black text-emerald-600 dark:text-emerald-400 mt-1 block">+৳ 95.00</span>
-              </div>
-            </div>
-            <button onclick="completeSimulatedTask('Daraz App', 95.00)" class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs transition">Claim</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- ================= 3. TAB: SURVEYS ================= -->
-      <div id="tab-surveys" class="hidden space-y-6">
-        <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs">
-          <h2 class="text-xl font-black text-slate-900 dark:text-white">High Paying Paid Surveys</h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Share your opinion on consumer products, technology, and brands to earn high cash rewards.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between mb-3">
-                <span class="px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-950 text-amber-600 text-xs font-black">BitLabs Survey</span>
-                <span class="text-xs text-amber-500 font-bold"><i class="fa-solid fa-star"></i> 4.9</span>
-              </div>
-              <h4 class="font-black text-base text-slate-900 dark:text-white">Global Smartphone Usage 2026</h4>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">Tell researchers about your mobile phone habits and daily app usage.</p>
-              <div class="flex items-center gap-3 text-xs text-slate-400 mt-4">
-                <span><i class="fa-regular fa-clock"></i> 8 Mins</span>
-                <span>•</span>
-                <span><i class="fa-solid fa-users"></i> 1,420 Completed</span>
-              </div>
-            </div>
-            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-              <div>
-                <span class="text-[10px] uppercase font-bold text-slate-400 block">Reward</span>
-                <span class="text-base font-black text-emerald-600 dark:text-emerald-400">৳ 120.00</span>
-              </div>
-              <button onclick="startSurvey('Smartphone Survey', 120.00)" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-xs transition shadow-sm">
-                Start Survey
-              </button>
-            </div>
-          </div>
-
-          <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between mb-3">
-                <span class="px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-600 text-xs font-black">CPX Research</span>
-                <span class="text-xs text-amber-500 font-bold"><i class="fa-solid fa-star"></i> 4.8</span>
-              </div>
-              <h4 class="font-black text-base text-slate-900 dark:text-white">Online Shopping & Food Delivery</h4>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">Answer questions about how often you order meals and items online.</p>
-              <div class="flex items-center gap-3 text-xs text-slate-400 mt-4">
-                <span><i class="fa-regular fa-clock"></i> 12 Mins</span>
-                <span>•</span>
-                <span><i class="fa-solid fa-users"></i> 2,890 Completed</span>
-              </div>
-            </div>
-            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-              <div>
-                <span class="text-[10px] uppercase font-bold text-slate-400 block">Reward</span>
-                <span class="text-base font-black text-emerald-600 dark:text-emerald-400">৳ 175.00</span>
-              </div>
-              <button onclick="startSurvey('Online Shopping Survey', 175.00)" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-xs transition shadow-sm">
-                Start Survey
-              </button>
-            </div>
-          </div>
-
-          <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between mb-3">
-                <span class="px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-600 text-xs font-black">Pollfish</span>
-                <span class="text-xs text-amber-500 font-bold"><i class="fa-solid fa-star"></i> 5.0</span>
-              </div>
-              <h4 class="font-black text-base text-slate-900 dark:text-white">Quick 3-Minute Lifestyle Poll</h4>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">Fast qualification poll with instant approval and reward credit.</p>
-              <div class="flex items-center gap-3 text-xs text-slate-400 mt-4">
-                <span><i class="fa-regular fa-clock"></i> 3 Mins</span>
-                <span>•</span>
-                <span><i class="fa-solid fa-users"></i> 5,110 Completed</span>
-              </div>
-            </div>
-            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-              <div>
-                <span class="text-[10px] uppercase font-bold text-slate-400 block">Reward</span>
-                <span class="text-base font-black text-emerald-600 dark:text-emerald-400">৳ 45.00</span>
-              </div>
-              <button onclick="startSurvey('Lifestyle Poll', 45.00)" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-xs transition shadow-sm">
-                Start Survey
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ================= 4. TAB: BROWSING (PTC ADS) ================= -->
-      <div id="tab-browsing" class="hidden space-y-6">
-        <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <!-- Cooperate Banner (Daily Challenge $100 Banner) -->
+        <div onclick="switchTab('challenge')" class="rounded-3xl p-6 sm:p-7 bg-gradient-to-r from-indigo-900 via-indigo-800 to-purple-900 text-white shadow-xl cursor-pointer hover:opacity-95 transition flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
-            <h2 class="text-xl font-black text-slate-900 dark:text-white">Surf Ads & Get Paid</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Click on the ads below, wait for the countdown timer, and claim instant coins into your main balance.</p>
+            <span class="px-3 py-1 rounded-full bg-white/10 text-amber-300 border border-white/15 text-xs font-bold mb-2 inline-block">
+              Daily Challenge
+            </span>
+            <h3 class="text-2xl font-black tracking-tight">$100 Daily Offer Leaderboard</h3>
+            <p class="text-xs text-indigo-200 mt-1 max-w-lg">Compete with top earners worldwide and win daily cash rewards credited directly to your balance.</p>
           </div>
-          <div class="px-4 py-2 rounded-2xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 font-extrabold text-xs flex items-center gap-2">
-            <i class="fa-solid fa-check-circle"></i>
-            <span>12 Ads Available Today</span>
-          </div>
+          <button class="px-6 py-3 rounded-xl bg-amber-500 text-slate-900 font-black text-xs shadow-lg shadow-amber-500/30">
+            Join Challenge
+          </button>
         </div>
 
-        <div class="space-y-3">
-          <div class="bg-white dark:bg-[#111827] rounded-2xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-emerald-400 transition">
-            <div class="flex items-center gap-3.5">
-              <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center text-base font-bold">
-                1
-              </div>
-              <div>
-                <h4 class="font-extrabold text-sm text-slate-900 dark:text-white">Free Bitcoin Mining Pool 2026 - Join Today</h4>
-                <div class="flex items-center gap-3 text-xs text-slate-400 mt-1">
-                  <span><i class="fa-regular fa-clock"></i> 20 Seconds</span>
-                  <span>•</span>
-                  <span class="text-emerald-600 dark:text-emerald-400 font-bold">+৳ 6.50 BDT</span>
-                </div>
-              </div>
-            </div>
-            <button onclick="launchPTCAd('Bitcoin Mining Pool', 20, 6.50)" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs transition active:scale-95 shadow-xs">
-              View Ad (20s)
-            </button>
-          </div>
-
-          <div class="bg-white dark:bg-[#111827] rounded-2xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-emerald-400 transition">
-            <div class="flex items-center gap-3.5">
-              <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center text-base font-bold">
-                2
-              </div>
-              <div>
-                <h4 class="font-extrabold text-sm text-slate-900 dark:text-white">Play & Win $50 Daily - Crypto Casual Games</h4>
-                <div class="flex items-center gap-3 text-xs text-slate-400 mt-1">
-                  <span><i class="fa-regular fa-clock"></i> 15 Seconds</span>
-                  <span>•</span>
-                  <span class="text-emerald-600 dark:text-emerald-400 font-bold">+৳ 4.80 BDT</span>
-                </div>
-              </div>
-            </div>
-            <button onclick="launchPTCAd('Crypto Casual Games', 15, 4.80)" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs transition active:scale-95 shadow-xs">
-              View Ad (15s)
-            </button>
-          </div>
-
-          <div class="bg-white dark:bg-[#111827] rounded-2xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-emerald-400 transition">
-            <div class="flex items-center gap-3.5">
-              <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center text-base font-bold">
-                3
-              </div>
-              <div>
-                <h4 class="font-extrabold text-sm text-slate-900 dark:text-white">Best Web Hosting Deals - 80% Off Coupon</h4>
-                <div class="flex items-center gap-3 text-xs text-slate-400 mt-1">
-                  <span><i class="fa-regular fa-clock"></i> 10 Seconds</span>
-                  <span>•</span>
-                  <span class="text-emerald-600 dark:text-emerald-400 font-bold">+৳ 3.50 BDT</span>
-                </div>
-              </div>
-            </div>
-            <button onclick="launchPTCAd('Web Hosting Deals', 10, 3.50)" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs transition active:scale-95 shadow-xs">
-              View Ad (10s)
-            </button>
-          </div>
-        </div>
       </div>
 
-      <!-- ================= 5. TAB: CASHOUT / WITHDRAW ================= -->
-      <div id="tab-cashout" class="hidden space-y-6">
-        <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <!-- ================= PAGE 2: OFFERS / STATISTICS ================= -->
+      <div id="page-offers" class="hidden space-y-6">
+        
+        <!-- Offers Header Info Tabs -->
+        <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 pb-3 text-xs font-bold">
+          <button onclick="setOfferSubtab('offers')" id="offerTab-offers" class="px-4 py-2 rounded-xl text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center gap-2">
+            <i class="fa-solid fa-gamepad"></i> Offers
+          </button>
+          <button onclick="setOfferSubtab('started')" id="offerTab-started" class="px-4 py-2 rounded-xl text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center gap-2">
+            <i class="fa-solid fa-hourglass-start"></i> Started
+          </button>
+          <button onclick="setOfferSubtab('completed')" id="offerTab-completed" class="px-4 py-2 rounded-xl bg-brand-50 dark:bg-indigo-950 text-brand-600 dark:text-indigo-400 flex items-center gap-2">
+            <i class="fa-solid fa-circle-check text-amber-500"></i> Completed
+          </button>
+        </div>
+
+        <!-- 4 Overview Stats Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white dark:bg-[#111827] rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-xs flex items-center gap-3.5">
+            <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 flex items-center justify-center text-lg">
+              <i class="fa-solid fa-award"></i>
+            </div>
             <div>
-              <h2 class="text-xl font-black text-slate-900 dark:text-white">Cashout Your Rewards</h2>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Choose your payout method. Local payments (bKash/Nagad/Rocket) and Crypto are processed within minutes.</p>
-            </div>
-            <div class="text-left sm:text-right">
-              <span class="text-[10px] uppercase font-bold text-slate-400 block">Available to Withdraw</span>
-              <span id="cashoutPageBalance" class="text-2xl font-black text-emerald-600 dark:text-emerald-400">৳ 246.50</span>
+              <p class="text-xl font-black text-slate-900 dark:text-white">0</p>
+              <span class="text-[11px] font-bold text-slate-400">Offers Completed</span>
             </div>
           </div>
-        </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          
-          <!-- bKash -->
-          <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs hover:border-pink-500 transition group flex flex-col justify-between">
+          <div class="bg-white dark:bg-[#111827] rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-xs flex items-center gap-3.5">
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 flex items-center justify-center text-lg">
+              <i class="fa-solid fa-coins"></i>
+            </div>
             <div>
-              <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 rounded-2xl bg-pink-50 dark:bg-pink-950/60 text-pink-600 flex items-center justify-center text-xl font-black">
-                  বিকাশ
-                </div>
-                <span class="px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950 text-emerald-600 text-[10px] font-black">INSTANT</span>
-              </div>
-              <h4 class="font-extrabold text-base text-slate-900 dark:text-white">bKash Personal</h4>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Fast mobile recharge & send money direct to your bKash wallet.</p>
-              <div class="mt-4 text-xs font-semibold text-slate-600 dark:text-slate-300 space-y-1">
-                <div class="flex justify-between"><span>Min Withdraw:</span> <span class="font-bold text-slate-900 dark:text-white">৳ 100 BDT</span></div>
-                <div class="flex justify-between"><span>Fee:</span> <span class="font-bold text-emerald-600">0% FREE</span></div>
-              </div>
+              <p class="text-xl font-black text-emerald-600">৳ 0.000</p>
+              <span class="text-[11px] font-bold text-slate-400">Offer Earnings</span>
             </div>
-            <button onclick="openMethodCashout('bKash', 100)" class="mt-5 w-full py-2.5 rounded-xl bg-pink-600 hover:bg-pink-700 text-white font-extrabold text-xs transition">
-              Withdraw via bKash
-            </button>
           </div>
 
-          <!-- Nagad -->
-          <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs hover:border-orange-500 transition group flex flex-col justify-between">
+          <div class="bg-white dark:bg-[#111827] rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-xs flex items-center gap-3.5">
+            <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950 text-amber-600 flex items-center justify-center text-lg">
+              <i class="fa-regular fa-clock"></i>
+            </div>
             <div>
-              <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 rounded-2xl bg-orange-50 dark:bg-orange-950/60 text-orange-600 flex items-center justify-center text-xl font-black">
-                  নগদ
-                </div>
-                <span class="px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950 text-emerald-600 text-[10px] font-black">INSTANT</span>
-              </div>
-              <h4 class="font-extrabold text-base text-slate-900 dark:text-white">Nagad Personal</h4>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Direct cashout to Nagad number in Bangladesh.</p>
-              <div class="mt-4 text-xs font-semibold text-slate-600 dark:text-slate-300 space-y-1">
-                <div class="flex justify-between"><span>Min Withdraw:</span> <span class="font-bold text-slate-900 dark:text-white">৳ 100 BDT</span></div>
-                <div class="flex justify-between"><span>Fee:</span> <span class="font-bold text-emerald-600">0% FREE</span></div>
-              </div>
+              <p class="text-xl font-black text-amber-500">৳ 0.000</p>
+              <span class="text-[11px] font-bold text-slate-400">Pending Earnings</span>
             </div>
-            <button onclick="openMethodCashout('Nagad', 100)" class="mt-5 w-full py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs transition">
-              Withdraw via Nagad
-            </button>
           </div>
 
-          <!-- Binance Pay USDT -->
-          <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs hover:border-amber-500 transition group flex flex-col justify-between">
+          <div class="bg-white dark:bg-[#111827] rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-xs flex items-center gap-3.5">
+            <div class="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-950 text-teal-600 flex items-center justify-center text-lg">
+              <i class="fa-solid fa-shield-heart"></i>
+            </div>
             <div>
-              <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/60 text-amber-500 flex items-center justify-center text-xl font-black">
-                  <i class="fa-brands fa-bitcoin"></i>
-                </div>
-                <span class="px-2 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950 text-indigo-600 text-[10px] font-black">GLOBAL</span>
-              </div>
-              <h4 class="font-extrabold text-base text-slate-900 dark:text-white">Binance Pay (USDT)</h4>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Instant zero-fee transfer to any Binance ID or Pay ID.</p>
-              <div class="mt-4 text-xs font-semibold text-slate-600 dark:text-slate-300 space-y-1">
-                <div class="flex justify-between"><span>Min Withdraw:</span> <span class="font-bold text-slate-900 dark:text-white">$1.00 USD (৳120)</span></div>
-                <div class="flex justify-between"><span>Fee:</span> <span class="font-bold text-emerald-600">$0.00 FREE</span></div>
-              </div>
+              <p class="text-xl font-black text-teal-600">0%</p>
+              <span class="text-[11px] font-bold text-slate-400">Chargeback Rate</span>
             </div>
-            <button onclick="openMethodCashout('Binance Pay', 120)" class="mt-5 w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-900 font-extrabold text-xs transition">
-              Withdraw via Binance
-            </button>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- ================= 6. TAB: AFFILIATE / REFERRALS ================= -->
-      <div id="tab-affiliate" class="hidden space-y-6">
-        <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs">
-          <h2 class="text-xl font-black text-slate-900 dark:text-white">Affiliate & Referral Program</h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Invite your friends to RewardJoy and earn 10% lifetime commissions from all their completed tasks!</p>
-          
-          <div class="mt-6 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div class="flex-1 w-full">
-              <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">Your Referral Link</span>
-              <input id="refLinkInput" type="text" readonly value="https://rewardjoy.com/ref/marufbeo360" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2 text-xs font-mono font-bold text-slate-800 dark:text-slate-200 focus:outline-hidden" />
-            </div>
-            <button onclick="copyReferralLink()" class="w-full sm:w-auto mt-2 sm:mt-5 px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs transition flex items-center justify-center gap-2">
-              <i class="fa-regular fa-copy"></i>
-              <span id="copyBtnText">Copy Link</span>
-            </button>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
-          <div class="bg-white dark:bg-[#111827] rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-xs text-center">
-            <span class="text-xs font-bold text-slate-400">Total Referrals</span>
-            <h3 class="text-3xl font-black text-slate-900 dark:text-white mt-1">0</h3>
-          </div>
-          <div class="bg-white dark:bg-[#111827] rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-xs text-center">
-            <span class="text-xs font-bold text-slate-400">Active Today</span>
-            <h3 class="text-3xl font-black text-emerald-600 mt-1">0</h3>
-          </div>
-          <div class="bg-white dark:bg-[#111827] rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-xs text-center">
-            <span class="text-xs font-bold text-slate-400">Commission Earned</span>
-            <h3 class="text-3xl font-black text-brand-600 mt-1">৳ 0.00</h3>
-          </div>
-        </div>
-      </div>
-
-      <!-- ================= 7. TAB: CHALLENGE / LEADERBOARD ================= -->
-      <div id="tab-challenge" class="hidden space-y-6">
-        <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h2 class="text-xl font-black text-slate-900 dark:text-white">Daily $100 Challenge Leaderboard</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Competition resets every 24 hours at 00:00 UTC. Top earners get rewarded automatically.</p>
-          </div>
-          <div class="px-4 py-2 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 font-bold text-xs">
-            1st Prize: $40.00 (৳4,800)
-          </div>
-        </div>
-
+        <!-- Table Filters & Completed Table -->
         <div class="bg-white dark:bg-[#111827] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
-          <div class="p-4 border-b border-slate-100 dark:border-slate-800 flex justify-between text-xs font-bold text-slate-400 uppercase">
-            <span>Rank & User</span>
-            <span>Coins Today</span>
-            <span>Prize</span>
+          <div class="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center gap-4 text-xs font-bold">
+            <span class="text-brand-600 border-b-2 border-brand-600 pb-1 cursor-pointer">Offers</span>
+            <span class="text-slate-400 hover:text-slate-600 cursor-pointer">Surveys</span>
+            <span class="text-slate-400 hover:text-slate-600 cursor-pointer">Chargebacks</span>
           </div>
 
-          <div class="divide-y divide-slate-100 dark:divide-slate-800/60 text-xs">
-            <div class="p-4 flex items-center justify-between font-semibold">
-              <div class="flex items-center gap-3">
-                <span class="w-6 h-6 rounded-full bg-yellow-400 text-slate-900 flex items-center justify-center font-black text-xs">1</span>
-                <span class="font-extrabold text-slate-900 dark:text-white">rahim_boss99</span>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-400 font-bold uppercase tracking-wider text-[10px]">
+                <tr>
+                  <th class="p-4">Offer</th>
+                  <th class="p-4">Offer Partner</th>
+                  <th class="p-4">Reward</th>
+                  <th class="p-4">Status</th>
+                  <th class="p-4">Time</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800/80">
+                <tr>
+                  <td colspan="5" class="text-center py-12 text-slate-400 font-medium">No data</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ================= PAGE 3: SURVEYS ================= -->
+      <div id="page-surveys" class="hidden space-y-6">
+        
+        <!-- Survey Partners Horizontal Scroll Section -->
+        <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs">
+          <div class="flex items-center gap-2 mb-4">
+            <i class="fa-solid fa-handshake text-indigo-500 text-xs"></i>
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Survey Partners</h2>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+            
+            <!-- CPX Research -->
+            <div onclick="simulateSurvey('CPX Research')" class="rounded-2xl p-4 border border-slate-200/80 dark:border-slate-700/80 hover:border-emerald-400 transition cursor-pointer text-center" style="background: linear-gradient(rgb(255, 255, 255), rgb(225, 255, 247));">
+              <div class="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm font-black mx-auto mb-2 shadow-xs">
+                CPX
               </div>
-              <span class="font-extrabold text-emerald-600">45,200 Coins</span>
-              <span class="font-black text-amber-500">$40.00</span>
+              <p class="font-extrabold text-xs text-slate-800">CPX Research</p>
             </div>
 
-            <div class="p-4 flex items-center justify-between font-semibold">
-              <div class="flex items-center gap-3">
-                <span class="w-6 h-6 rounded-full bg-slate-300 text-slate-800 flex items-center justify-center font-black text-xs">2</span>
-                <span class="font-extrabold text-slate-900 dark:text-white">alex_crypto</span>
+            <!-- Bitlabs -->
+            <div onclick="simulateSurvey('Bitlabs Surveys')" class="rounded-2xl p-4 border border-slate-200/80 dark:border-slate-700/80 hover:border-blue-400 transition cursor-pointer text-center" style="background: linear-gradient(rgb(255, 255, 255), rgb(221, 237, 255));">
+              <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-black mx-auto mb-2 shadow-xs">
+                BL
               </div>
-              <span class="font-extrabold text-emerald-600">38,150 Coins</span>
-              <span class="font-black text-amber-500">$25.00</span>
+              <p class="font-extrabold text-xs text-slate-800">Bitlabs Surveys</p>
             </div>
 
-            <div class="p-4 flex items-center justify-between font-semibold">
-              <div class="flex items-center gap-3">
-                <span class="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center font-black text-xs">3</span>
-                <span class="font-extrabold text-slate-900 dark:text-white">hasan_bd</span>
+            <!-- Prime -->
+            <div onclick="simulateSurvey('Prime Surveys')" class="rounded-2xl p-4 border border-slate-200/80 dark:border-slate-700/80 hover:border-indigo-400 transition cursor-pointer text-center" style="background: linear-gradient(rgb(255, 255, 255), rgb(219, 229, 255));">
+              <div class="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center text-sm font-black mx-auto mb-2 shadow-xs">
+                PR
               </div>
-              <span class="font-extrabold text-emerald-600">29,400 Coins</span>
-              <span class="font-black text-amber-500">$15.00</span>
+              <p class="font-extrabold text-xs text-slate-800">Prime Surveys</p>
             </div>
 
-            <div class="p-4 flex items-center justify-between font-semibold text-slate-500 dark:text-slate-400">
-              <div class="flex items-center gap-3">
-                <span class="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-bold text-xs">4</span>
-                <span>jennifer_w</span>
+            <!-- Theoremreach -->
+            <div onclick="simulateSurvey('Theoremreach')" class="rounded-2xl p-4 border border-slate-200/80 dark:border-slate-700/80 hover:border-purple-400 transition cursor-pointer text-center" style="background: linear-gradient(rgb(255, 255, 255), rgb(240, 229, 255));">
+              <div class="w-10 h-10 rounded-full bg-purple-600 text-white flex items-center justify-center text-sm font-black mx-auto mb-2 shadow-xs">
+                TR
               </div>
-              <span class="font-bold">21,100 Coins</span>
-              <span class="font-bold text-slate-700 dark:text-slate-300">$5.00</span>
+              <p class="font-extrabold text-xs text-slate-800">Theoremreach</p>
             </div>
 
-            <div class="p-4 flex items-center justify-between font-semibold text-slate-500 dark:text-slate-400">
-              <div class="flex items-center gap-3">
-                <span class="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-bold text-xs">5</span>
-                <span>tarik_007</span>
+            <!-- Cherries -->
+            <div onclick="simulateSurvey('Cherries')" class="rounded-2xl p-4 border border-slate-200/80 dark:border-slate-700/80 hover:border-rose-400 transition cursor-pointer text-center" style="background: linear-gradient(rgb(255, 255, 255), rgb(255, 233, 237));">
+              <div class="w-10 h-10 rounded-full bg-rose-600 text-white flex items-center justify-center text-sm font-black mx-auto mb-2 shadow-xs">
+                CH
               </div>
-              <span class="font-bold">18,300 Coins</span>
-              <span class="font-bold text-slate-700 dark:text-slate-300">$3.00</span>
+              <p class="font-extrabold text-xs text-slate-800">Cherries</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Surveys Completed Live Feed (Exact Table from RewardJoy) -->
+        <div class="bg-white dark:bg-[#111827] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
+          <div class="p-5 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-chart-line text-emerald-500"></i>
+              <h3 class="font-black text-sm text-slate-900 dark:text-white">Surveys Completed</h3>
+            </div>
+            
+            <div class="flex items-center gap-3">
+              <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-600 dark:text-slate-300">
+                <i class="fa-solid fa-globe text-slate-400"></i> Global
+              </div>
+              <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-600 dark:text-slate-300">
+                <i class="fa-solid fa-dollar-sign text-emerald-500"></i> All
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-400 font-bold uppercase tracking-wider text-[10px]">
+                <tr>
+                  <th class="p-4">Survey</th>
+                  <th class="p-4">User</th>
+                  <th class="p-4">Reward</th>
+                  <th class="p-4">Time</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800/80 font-medium">
+                <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40">
+                  <td class="p-4 font-bold text-slate-800 dark:text-slate-200">Complete</td>
+                  <td class="p-4 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-700 text-[10px] flex items-center justify-center font-bold">M</span>
+                    <span>MAPZ1 <span class="text-[10px] text-slate-400">🇹🇭</span></span>
+                  </td>
+                  <td class="p-4 font-black text-emerald-600">৳ 37.1</td>
+                  <td class="p-4 text-slate-400">54s ago</td>
+                </tr>
+                <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40">
+                  <td class="p-4 font-bold text-slate-800 dark:text-slate-200">Complete</td>
+                  <td class="p-4 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-700 text-[10px] flex items-center justify-center font-bold">B</span>
+                    <span>Bojko <span class="text-[10px] text-slate-400">🇮🇪</span></span>
+                  </td>
+                  <td class="p-4 font-black text-emerald-600">৳ 25.7</td>
+                  <td class="p-4 text-slate-400">3m ago</td>
+                </tr>
+                <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40">
+                  <td class="p-4 font-bold text-slate-800 dark:text-slate-200">Campaign 122970768</td>
+                  <td class="p-4 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-700 text-[10px] flex items-center justify-center font-bold">A</span>
+                    <span>aliisik61 <span class="text-[10px] text-slate-400">🇹🇷</span></span>
+                  </td>
+                  <td class="p-4 font-black text-emerald-600">৳ 24.0</td>
+                  <td class="p-4 text-slate-400">6m ago</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="p-4 border-t border-slate-100 dark:border-slate-800 text-center">
+            <button class="text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-brand-600 flex items-center gap-1.5 mx-auto">
+              <span>Load more</span>
+              <i class="fa-solid fa-angle-down text-[10px]"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ================= PAGE 4: BROWSING (PTC ADS) ================= -->
+      <div id="page-browsing" class="space-y-6">
+        
+        <!-- Ad Disclaimer Tip Notice -->
+        <div id="adNoticeBanner" class="bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 rounded-2xl p-4 flex items-start justify-between gap-3 text-xs text-amber-800 dark:text-amber-300">
+          <div class="flex items-start gap-2.5">
+            <i class="fa-solid fa-circle-info text-amber-500 mt-0.5"></i>
+            <span>Any link served through advertisements is not an endorsement or recommendation by RewardJoy. Please exercise your due diligence before use.</span>
+          </div>
+          <button onclick="document.getElementById('adNoticeBanner').remove()" class="text-slate-400 hover:text-slate-600 font-bold p-0.5">✕</button>
+        </div>
+
+        <!-- Ads Stats Header -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4 text-xs font-bold text-slate-600 dark:text-slate-300">
+            <span><b class="text-slate-900 dark:text-white text-base">8</b> Ads</span>
+            <span><b class="text-emerald-600 text-base">৳ 2.81</b> Available</span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Unviewed only</span>
+            <input type="checkbox" checked class="w-4 h-4 rounded text-brand-600 focus:ring-0" />
+          </div>
+        </div>
+
+        <!-- Ads Grid / List -->
+        <div class="space-y-3">
+          
+          <!-- Top 1 Rotator -->
+          <div class="bg-white dark:bg-[#111827] rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-brand-500 transition">
+            <div class="flex items-start gap-3">
+              <div class="w-9 h-9 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 flex items-center justify-center text-sm font-bold mt-0.5">
+                <i class="fa-solid fa-bolt"></i>
+              </div>
+              <div>
+                <h4 class="font-extrabold text-sm text-slate-900 dark:text-white">EARN $780 PER DAY - NO INVESTMENT</h4>
+                <div class="flex items-center gap-3 text-xs text-slate-400 mt-1">
+                  <span class="font-black text-emerald-600 dark:text-emerald-400">৳ 0.872</span>
+                  <span>•</span>
+                  <span><i class="fa-regular fa-clock"></i> 30s</span>
+                  <span>•</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-bold text-slate-600 dark:text-slate-300">Frameless</span>
+                </div>
+              </div>
+            </div>
+            <button onclick="launchAdTimer('EARN $780 PER DAY', 30, 0.872)" class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs transition active:scale-95 shadow-xs">
+              Surf Ad (30s)
+            </button>
+          </div>
+
+          <!-- Top 2 Winvest -->
+          <div class="bg-white dark:bg-[#111827] rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-brand-500 transition">
+            <div class="flex items-start gap-3">
+              <div class="w-9 h-9 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 flex items-center justify-center text-sm font-bold mt-0.5">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+              </div>
+              <div>
+                <h4 class="font-extrabold text-sm text-slate-900 dark:text-white">Winvest.com - Earn 3% Daily Profit - Double Your Money</h4>
+                <div class="flex items-center gap-3 text-xs text-slate-400 mt-1">
+                  <span class="font-black text-emerald-600 dark:text-emerald-400">৳ 0.836</span>
+                  <span>•</span>
+                  <span><i class="fa-regular fa-clock"></i> 45s</span>
+                  <span>•</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-bold text-slate-600 dark:text-slate-300">Frameless</span>
+                </div>
+              </div>
+            </div>
+            <button onclick="launchAdTimer('Winvest.com Daily', 45, 0.836)" class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs transition active:scale-95 shadow-xs">
+              Surf Ad (45s)
+            </button>
+          </div>
+
+          <!-- Top 3 King of the Faucets -->
+          <div class="bg-white dark:bg-[#111827] rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-brand-500 transition">
+            <div class="flex items-start gap-3">
+              <div class="w-9 h-9 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 flex items-center justify-center text-sm font-bold mt-0.5">
+                <i class="fa-solid fa-crown"></i>
+              </div>
+              <div>
+                <h4 class="font-extrabold text-sm text-slate-900 dark:text-white">King of the Faucets - Free Crypto Claim</h4>
+                <div class="flex items-center gap-3 text-xs text-slate-400 mt-1">
+                  <span class="font-black text-emerald-600 dark:text-emerald-400">৳ 0.356</span>
+                  <span>•</span>
+                  <span><i class="fa-regular fa-clock"></i> 15s</span>
+                  <span>•</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-bold text-slate-600 dark:text-slate-300">Frameless</span>
+                </div>
+              </div>
+            </div>
+            <button onclick="launchAdTimer('King of the Faucets', 15, 0.356)" class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs transition active:scale-95 shadow-xs">
+              Surf Ad (15s)
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ================= PAGE 5: AFFILIATE ================= -->
+      <div id="page-affiliate" class="hidden space-y-6">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          
+          <!-- Referral Link Card -->
+          <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Your referral link</span>
+                <div class="flex items-center gap-2 text-slate-400">
+                  <button class="hover:text-blue-400 transition"><i class="fa-brands fa-x-twitter"></i></button>
+                  <button class="hover:text-blue-500 transition"><i class="fa-brands fa-telegram"></i></button>
+                  <button class="hover:text-blue-600 transition"><i class="fa-brands fa-facebook"></i></button>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2 p-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl mb-4">
+                <input id="refInput" readonly value="https://www.rewardjoy.com/?r=3qi22438y7q9" class="w-full bg-transparent text-xs font-mono font-bold text-slate-800 dark:text-slate-200 focus:outline-hidden px-2" />
+                <button onclick="copyRef()" class="p-2 rounded-lg bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold text-xs transition">
+                  <i class="fa-regular fa-copy"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <button class="flex-1 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
+                Manage link
+              </button>
+              <button class="flex-1 py-2 rounded-xl bg-brand-600 text-white text-xs font-bold hover:bg-brand-700">
+                Get promo materials
+              </button>
+            </div>
+          </div>
+
+          <!-- Commission Rates Card -->
+          <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-around">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+              <span class="text-xs font-bold text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
+                Earning Commission Rate
+                <i class="fa-solid fa-circle-question text-slate-400 text-xs" title="Based on membership level"></i>
+              </span>
+              <b class="text-xl font-black text-brand-600 dark:text-indigo-400">8%</b>
+            </div>
+
+            <div class="flex items-center justify-between pt-3">
+              <span class="text-xs font-bold text-slate-600 dark:text-slate-300">Spending Commission Rate</span>
+              <b class="text-xl font-black text-emerald-600">5%</b>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 30-Day Commission Summary -->
+        <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs">
+          <div class="flex justify-between items-center mb-2">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Last 30-Day affiliate commission</h3>
+            <span class="text-xs font-semibold text-slate-500">Last 30 days</span>
+          </div>
+          <p class="text-2xl font-black text-slate-900 dark:text-white">৳ 0.000</p>
+        </div>
+
+        <!-- Referrals Table -->
+        <div class="bg-white dark:bg-[#111827] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
+          <div class="p-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
+            <h3 class="font-black text-sm text-slate-900 dark:text-white">Your Referrals</h3>
+            <button class="text-xs font-bold text-brand-600">View all</button>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-400 font-bold uppercase tracking-wider text-[10px]">
+                <tr>
+                  <th class="p-4">Username</th>
+                  <th class="p-4">Registered</th>
+                  <th class="p-4">Total Earned</th>
+                  <th class="p-4">Ads Spending</th>
+                  <th class="p-4">You Got</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                <tr>
+                  <td colspan="5" class="text-center py-10 text-slate-400">No referrals yet. Share your link above!</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ================= PAGE 6: CHALLENGE / LEADERBOARD ================= -->
+      <div id="page-challenge" class="space-y-6">
+        
+        <!-- Challenge Header Stats -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div class="flex items-center gap-4">
+            <div class="px-3.5 py-1.5 rounded-xl bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 font-bold text-slate-700 dark:text-slate-300">
+              Number of awards: <span class="text-brand-600">0</span>
+            </div>
+            <div class="px-3.5 py-1.5 rounded-xl bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 font-bold text-slate-700 dark:text-slate-300">
+              Total Prizes: <span class="text-emerald-600">৳ 0.000</span>
+            </div>
+          </div>
+          <button class="text-xs font-bold text-brand-600 hover:underline flex items-center gap-1">
+            More Statistics <i class="fa-solid fa-angle-right text-[10px]"></i>
+          </button>
+        </div>
+
+        <!-- 2 Grand Contest Cards (Daily & Affiliate) -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          
+          <!-- Card 1: Daily Challenge ($100) -->
+          <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+                <h3 class="text-xl font-black text-slate-900 dark:text-white">Daily</h3>
+                <div class="text-right">
+                  <span class="text-[10px] text-slate-400 uppercase font-bold block">Prize</span>
+                  <strong class="text-2xl font-black text-amber-500">$100</strong>
+                </div>
+              </div>
+
+              <!-- Top 3 Podium (Crown 1, 2, 3) -->
+              <div class="grid grid-cols-3 gap-2 items-end pt-8 pb-4 text-center">
+                
+                <!-- Rank 2: Capone87 -->
+                <div class="flex flex-col items-center">
+                  <i class="fa-solid fa-crown text-slate-400 text-lg mb-1"></i>
+                  <div class="w-12 h-12 rounded-full border-2 border-slate-300 bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-bold text-xs">C</div>
+                  <p class="font-extrabold text-xs text-slate-900 dark:text-white mt-1.5">Capone87</p>
+                  <p class="text-xs font-black text-emerald-600">৳ 2,176</p>
+                  <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-t-xl podium-2 mt-2 flex items-center justify-center font-black text-slate-400">2</div>
+                </div>
+
+                <!-- Rank 1: GrumpyVet -->
+                <div class="flex flex-col items-center">
+                  <i class="fa-solid fa-crown text-amber-400 text-2xl mb-1 animate-bounce"></i>
+                  <div class="w-16 h-16 rounded-full border-3 border-amber-400 bg-amber-50 dark:bg-amber-950 flex items-center justify-center font-bold text-sm">G</div>
+                  <p class="font-black text-xs text-slate-900 dark:text-white mt-1.5">GrumpyVet</p>
+                  <p class="text-xs font-black text-amber-500">৳ 3,041</p>
+                  <div class="w-full bg-amber-400/20 dark:bg-amber-500/20 border-t-2 border-amber-400 rounded-t-xl podium-1 mt-2 flex items-center justify-center font-black text-amber-500 text-xl">1</div>
+                </div>
+
+                <!-- Rank 3: ErgnSana -->
+                <div class="flex flex-col items-center">
+                  <i class="fa-solid fa-crown text-amber-700 text-base mb-1"></i>
+                  <div class="w-12 h-12 rounded-full border-2 border-amber-700 bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-bold text-xs">E</div>
+                  <p class="font-extrabold text-xs text-slate-900 dark:text-white mt-1.5">ErgnSana</p>
+                  <p class="text-xs font-black text-emerald-600">৳ 1,740</p>
+                  <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-t-xl podium-3 mt-2 flex items-center justify-center font-black text-slate-400">3</div>
+                </div>
+
+              </div>
+
+              <!-- Your Rank Info -->
+              <div class="bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-4 mt-4">
+                <div class="flex justify-between items-center text-xs font-bold mb-1">
+                  <span>Your Rank: <b class="text-brand-600">#744</b></span>
+                  <span>Earnings: <b>৳ 0.00</b></span>
+                </div>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-2">Only <span class="font-bold text-amber-600">৳ 30.7</span> away from an extra <span class="font-bold text-emerald-600">$0.3</span> bonus</p>
+              </div>
+            </div>
+
+            <button class="w-full mt-5 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs transition">
+              Join Daily Challenge
+            </button>
+          </div>
+
+          <!-- Card 2: Affiliate Challenge ($1500) -->
+          <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+                <h3 class="text-xl font-black text-slate-900 dark:text-white">Affiliate</h3>
+                <div class="text-right">
+                  <span class="text-[10px] text-slate-400 uppercase font-bold block">Prize</span>
+                  <strong class="text-2xl font-black text-brand-600 dark:text-indigo-400">$1500</strong>
+                </div>
+              </div>
+
+              <!-- Top 3 Podium -->
+              <div class="grid grid-cols-3 gap-2 items-end pt-8 pb-4 text-center">
+                
+                <!-- Rank 2: ahmed827 -->
+                <div class="flex flex-col items-center">
+                  <i class="fa-solid fa-crown text-slate-400 text-lg mb-1"></i>
+                  <div class="w-12 h-12 rounded-full border-2 border-slate-300 bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-bold text-xs">A</div>
+                  <p class="font-extrabold text-xs text-slate-900 dark:text-white mt-1.5">ahmed827</p>
+                  <p class="text-xs font-bold text-indigo-500">★ 35.256</p>
+                  <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-t-xl podium-2 mt-2 flex items-center justify-center font-black text-slate-400">2</div>
+                </div>
+
+                <!-- Rank 1: Thenix557 -->
+                <div class="flex flex-col items-center">
+                  <i class="fa-solid fa-crown text-amber-400 text-2xl mb-1 animate-bounce"></i>
+                  <div class="w-16 h-16 rounded-full border-3 border-amber-400 bg-amber-50 dark:bg-amber-950 flex items-center justify-center font-bold text-sm">T</div>
+                  <p class="font-black text-xs text-slate-900 dark:text-white mt-1.5">Thenix557</p>
+                  <p class="text-xs font-bold text-indigo-500">★ 48.036</p>
+                  <div class="w-full bg-indigo-500/20 border-t-2 border-indigo-500 rounded-t-xl podium-1 mt-2 flex items-center justify-center font-black text-indigo-400 text-xl">1</div>
+                </div>
+
+                <!-- Rank 3: Rochester -->
+                <div class="flex flex-col items-center">
+                  <i class="fa-solid fa-crown text-amber-700 text-base mb-1"></i>
+                  <div class="w-12 h-12 rounded-full border-2 border-amber-700 bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-bold text-xs">R</div>
+                  <p class="font-extrabold text-xs text-slate-900 dark:text-white mt-1.5">Rochester</p>
+                  <p class="text-xs font-bold text-indigo-500">★ 19.358</p>
+                  <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-t-xl podium-3 mt-2 flex items-center justify-center font-black text-slate-400">3</div>
+                </div>
+
+              </div>
+
+              <!-- Your Rank Info -->
+              <div class="bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-4 mt-4">
+                <div class="flex justify-between items-center text-xs font-bold mb-1">
+                  <span>Your Rank: <b class="text-brand-600">#56</b></span>
+                  <span>Score: <b>0</b></span>
+                </div>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-2">Only <span class="font-bold text-amber-600">1.106</span> more score to reach Top 25.</p>
+              </div>
+            </div>
+
+            <button class="w-full mt-5 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs transition">
+              Join Affiliate Challenge
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ================= PAGE 7: PROFILE & SETTING ================= -->
+      <div id="page-profile" class="hidden space-y-6">
+        
+        <!-- Profile Header / Avatar -->
+        <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs flex items-center gap-5">
+          <div class="relative group">
+            <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-brand-600 to-purple-600 p-1 shadow-md">
+              <img src="https://api.dicebear.com/7.x/bottts/svg?seed=marufbeo360" alt="Avatar" class="w-full h-full rounded-full bg-white dark:bg-slate-900 object-cover" />
+            </div>
+            <label class="absolute bottom-0 right-0 w-7 h-7 rounded-full bg-brand-600 text-white flex items-center justify-center text-xs cursor-pointer shadow-md hover:bg-brand-700 transition">
+              <i class="fa-solid fa-camera"></i>
+              <input type="file" class="hidden" />
+            </label>
+          </div>
+          <div>
+            <h3 class="text-xl font-black text-slate-900 dark:text-white">marufbeo360</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">marufbro360x@gmail.com</p>
+            <span class="inline-block mt-2 px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 text-[10px] font-black">
+              Verified Account
+            </span>
+          </div>
+        </div>
+
+        <!-- Section 1: Profile Details -->
+        <div class="bg-white dark:bg-[#111827] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
+          <div class="p-4 border-b border-slate-100 dark:border-slate-800 font-extrabold text-xs text-slate-400 uppercase tracking-wider">
+            Profile Details
+          </div>
+
+          <div class="divide-y divide-slate-100 dark:divide-slate-800/80 text-xs">
+            <div class="p-4 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <i class="fa-regular fa-envelope text-slate-400 text-sm"></i>
+                <span class="font-bold text-slate-700 dark:text-slate-300">Email</span>
+              </div>
+              <span class="font-semibold text-slate-500">marufbro360x@gmail.com</span>
+            </div>
+
+            <div class="p-4 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-flag text-slate-400 text-sm"></i>
+                <span class="font-bold text-slate-700 dark:text-slate-300">Country</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-slate-800 dark:text-slate-200">🇧🇩 Bangladesh</span>
+                <button class="text-brand-600 font-bold hover:underline"><i class="fa-solid fa-pen-to-square"></i></button>
+              </div>
+            </div>
+
+            <div class="p-4 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-key text-slate-400 text-sm"></i>
+                <span class="font-bold text-slate-700 dark:text-slate-300">Offer Token</span>
+              </div>
+              <div class="flex items-center gap-2 font-mono">
+                <span class="text-slate-500 font-bold">fe4......e0f</span>
+                <button onclick="alert('Offer Token copied!')" class="text-amber-500 hover:text-amber-600"><i class="fa-regular fa-copy"></i></button>
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- Section 2: Settings -->
+        <div class="bg-white dark:bg-[#111827] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
+          <div class="p-4 border-b border-slate-100 dark:border-slate-800 font-extrabold text-xs text-slate-400 uppercase tracking-wider">
+            Security & Preferences
+          </div>
+
+          <div class="divide-y divide-slate-100 dark:divide-slate-800/80 text-xs">
+            <div class="p-4 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-wallet text-slate-400 text-sm"></i>
+                <div>
+                  <span class="font-bold text-slate-700 dark:text-slate-300 block">Default Wallet Address</span>
+                  <span class="text-[11px] text-slate-400">bKash, Nagad, or Binance Pay ID</span>
+                </div>
+              </div>
+              <button onclick="openCashoutModal()" class="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
+                Edit Wallet
+              </button>
+            </div>
+
+            <div class="p-4 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-shield-halved text-slate-400 text-sm"></i>
+                <span class="font-bold text-slate-700 dark:text-slate-300">2-Factor Authentication</span>
+              </div>
+              <div class="flex rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden font-bold text-[11px]">
+                <button class="px-3 py-1 hover:bg-slate-100 dark:hover:bg-slate-800">On</button>
+                <button class="px-3 py-1 bg-brand-600 text-white">Off</button>
+              </div>
+            </div>
+
+            <div class="p-4 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-volume-high text-slate-400 text-sm"></i>
+                <span class="font-bold text-slate-700 dark:text-slate-300">Sound of Frameless Ads</span>
+              </div>
+              <div class="flex rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden font-bold text-[11px]">
+                <button class="px-3 py-1 bg-brand-600 text-white">On</button>
+                <button class="px-3 py-1 hover:bg-slate-100 dark:hover:bg-slate-800">Off</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-2">
+          <button onclick="alert('Account deletion request initiated.')" class="text-xs font-bold text-rose-500 hover:underline">
+            Delete Account
+          </button>
+        </div>
+
       </div>
 
-      <!-- ================= 8. TAB: ADVERTISE ================= -->
-      <div id="tab-advertise" class="hidden space-y-6">
+      <!-- ================= PAGE 8: ADVERTISE ================= -->
+      <div id="page-advertise" class="hidden space-y-6">
         <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs">
           <h2 class="text-xl font-black text-slate-900 dark:text-white">Create Advertising Campaign</h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Promote your website, YouTube video, affiliate link, or app to thousands of active users.</p>
-          
-          <form onsubmit="handleCreateAd(event)" class="mt-6 space-y-4 max-w-xl">
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Get targeted real human traffic to your website, referral link, or app.</p>
+
+          <form onsubmit="handleAdSubmit(event)" class="mt-6 space-y-4 max-w-xl">
             <div>
               <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Campaign Title</label>
-              <input type="text" required placeholder="e.g. Join the Best Crypto Faucet" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-hidden" />
+              <input type="text" required placeholder="e.g. Best Crypto Faucet 2026" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-hidden" />
             </div>
 
             <div>
               <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Target URL</label>
-              <input type="url" required placeholder="https://yourwebsite.com/?ref=123" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-hidden" />
+              <input type="url" required placeholder="https://example.com/?ref=yourid" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-hidden" />
             </div>
 
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">View Duration</label>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Duration</label>
                 <select class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-hidden">
-                  <option value="10">10 Seconds (৳2.00 / view)</option>
-                  <option value="20">20 Seconds (৳3.50 / view)</option>
-                  <option value="30">30 Seconds (৳5.00 / view)</option>
+                  <option>15 Seconds</option>
+                  <option>30 Seconds</option>
+                  <option>45 Seconds</option>
                 </select>
               </div>
               <div>
-                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Total Clicks/Views</label>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Total Views</label>
                 <input type="number" min="100" value="500" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-hidden" />
               </div>
             </div>
 
-            <button type="submit" class="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs transition mt-2">
-              Submit & Launch Campaign
+            <button type="submit" class="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs transition">
+              Launch Campaign
             </button>
           </form>
         </div>
@@ -1061,7 +1106,7 @@
     </main>
   </div>
 
-  <!-- ================= FOOTER (Matching RewardJoy Full Hierarchy) ================= -->
+  <!-- ================= FOOTER (Exact RewardJoy Full Links) ================= -->
   <footer class="bg-white dark:bg-[#111827] border-t border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-xs">
     <div class="max-w-[1600px] mx-auto px-4 sm:px-6 py-10">
       <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
@@ -1069,13 +1114,11 @@
         <!-- Brand & Socials -->
         <div class="md:col-span-2 space-y-4">
           <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white text-sm font-black">
-              RJ
-            </div>
-            <span class="text-lg font-black text-slate-900 dark:text-white tracking-tight">RewardJoy</span>
+            <span class="w-8 h-8 rounded-lg bg-brand-600 text-white flex items-center justify-center font-black text-sm">RJ</span>
+            <span class="text-lg font-black text-slate-900 dark:text-white">RewardJoy</span>
           </div>
           <p class="text-xs text-slate-500 dark:text-slate-400 max-w-sm leading-relaxed">
-            The world's premier micro-task, offerwall, and crypto rewards platform. Turn your everyday free time into real money.
+            Earn rewards by playing games, taking surveys, and viewing ads.
           </p>
           <div class="flex items-center gap-3 text-slate-400">
             <a href="#" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-brand-600 hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-discord"></i></a>
@@ -1101,10 +1144,10 @@
         <div>
           <h5 class="font-extrabold text-slate-900 dark:text-white uppercase tracking-wider text-[11px] mb-3">Services</h5>
           <ul class="space-y-2">
-            <li><a href="#" class="hover:text-brand-600 transition">Support Center</a></li>
-            <li><a href="#" class="hover:text-brand-600 transition">Advertise with Us</a></li>
-            <li><a href="#" class="hover:text-brand-600 transition">Daily Challenge</a></li>
-            <li><a href="#" class="hover:text-brand-600 transition">Affiliate Program</a></li>
+            <li><a href="#" class="hover:text-brand-600 transition">Support</a></li>
+            <li><a href="#" class="hover:text-brand-600 transition">Advertise</a></li>
+            <li><a href="#" class="hover:text-brand-600 transition">Challenge</a></li>
+            <li><a href="#" class="hover:text-brand-600 transition">Affiliate</a></li>
           </ul>
         </div>
 
@@ -1112,9 +1155,9 @@
         <div>
           <h5 class="font-extrabold text-slate-900 dark:text-white uppercase tracking-wider text-[11px] mb-3">Info</h5>
           <ul class="space-y-2">
-            <li><a href="#" class="hover:text-brand-600 transition">Community Forum</a></li>
+            <li><a href="#" class="hover:text-brand-600 transition">Forum</a></li>
             <li><a href="#" class="hover:text-brand-600 transition">Testimonials</a></li>
-            <li><a href="#" class="hover:text-brand-600 transition">Live Cashout Feed</a></li>
+            <li><a href="#" class="hover:text-brand-600 transition">Live Cashout</a></li>
             <li><a href="#" class="hover:text-brand-600 transition">Careers</a></li>
           </ul>
         </div>
@@ -1122,21 +1165,17 @@
       </div>
 
       <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-400">
-        <div>© 2019-2026 RewardJoy Global Ltd. All rights reserved.</div>
-        <div class="flex items-center gap-3">
-          <span class="flex items-center gap-1.5"><i class="fa-solid fa-lock text-emerald-500"></i> SSL 256-bit Encrypted</span>
-          <span>•</span>
-          <span>Fast Payments</span>
+        <div>© 2019-2026 Adgrand Limited. All rights reserved.</div>
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 font-bold text-slate-700 dark:text-slate-300">Google Play</span>
         </div>
       </div>
     </div>
   </footer>
 
-  <!-- ================= MODALS ================= -->
-
-  <!-- 1. CASHOUT MODAL -->
-  <div id="cashoutModal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 sm:p-7 max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-800 relative">
+  <!-- ================= CASHOUT MODAL (bKash / Nagad / Binance) ================= -->
+  <div id="cashoutModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-800 relative">
       <button onclick="closeModal('cashoutModal')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 dark:hover:text-white p-1">
         <i class="fa-solid fa-xmark text-lg"></i>
       </button>
@@ -1146,258 +1185,153 @@
           <i class="fa-solid fa-money-bill-transfer"></i>
         </div>
         <div>
-          <h3 class="font-black text-lg text-slate-900 dark:text-white">Cashout Request</h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Withdraw your earned balance to your wallet.</p>
+          <h3 class="font-black text-lg text-slate-900 dark:text-white">Cashout</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Withdraw your balance to local or crypto wallet.</p>
         </div>
       </div>
 
-      <form onsubmit="handleCashoutSubmit(event)" class="space-y-4">
+      <form onsubmit="handleCashout(event)" class="space-y-4 text-xs">
         <div>
-          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Select Gateway</label>
-          <select id="cashoutGatewaySelect" onchange="updateCashoutLimits()" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-800 dark:text-slate-200 focus:outline-hidden">
-            <option value="bKash">bKash Personal (বিকাশ) - ৳100 Min</option>
-            <option value="Nagad">Nagad Personal (নগদ) - ৳100 Min</option>
-            <option value="Rocket">Rocket (রকেট) - ৳100 Min</option>
-            <option value="Binance Pay">Binance Pay (USDT) - $1.00 (৳120) Min</option>
-            <option value="Litecoin">Litecoin (LTC) - $1.00 Min</option>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Gateway</label>
+          <select id="cashoutSelect" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 font-bold focus:outline-hidden">
+            <option>bKash Personal (বিকাশ)</option>
+            <option>Nagad Personal (নগদ)</option>
+            <option>Rocket (রকেট)</option>
+            <option>Binance Pay (USDT)</option>
           </select>
         </div>
 
         <div>
-          <label id="accountInputLabel" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">bKash Account Number</label>
-          <input id="cashoutAccountInput" type="text" required placeholder="017XXXXXXXX" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-slate-900 dark:text-white focus:outline-hidden" />
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Account Number / Wallet ID</label>
+          <input type="text" required placeholder="017XXXXXXXX" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 font-semibold focus:outline-hidden" />
         </div>
 
         <div>
-          <div class="flex justify-between items-center mb-1">
-            <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Amount to Withdraw (৳)</label>
-            <span class="text-[11px] text-slate-400">Available: <b id="modalAvailBalance">৳ 246.50</b></span>
-          </div>
-          <input id="cashoutAmountInput" type="number" step="any" min="100" value="100" required class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-900 dark:text-white focus:outline-hidden" />
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Amount (৳)</label>
+          <input type="number" step="any" min="0.1" value="0.246" required class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 font-bold focus:outline-hidden" />
         </div>
 
-        <div class="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl text-[11px] text-slate-500 dark:text-slate-400 space-y-1">
-          <div class="flex justify-between"><span>Gateway Fee:</span> <span class="text-emerald-600 font-bold">0% (Free)</span></div>
-          <div class="flex justify-between"><span>Estimated Delivery:</span> <span class="font-bold text-slate-700 dark:text-slate-300">Within 15 minutes</span></div>
-        </div>
-
-        <button type="submit" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs transition shadow-md shadow-emerald-600/20 active:scale-98">
-          Confirm & Cashout
+        <button type="submit" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs transition shadow-md shadow-emerald-600/20">
+          Confirm Withdrawal
         </button>
       </form>
     </div>
   </div>
 
-  <!-- 2. DEPOSIT MODAL -->
-  <div id="depositModal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 sm:p-7 max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-800 relative">
+  <!-- ================= DEPOSIT MODAL ================= -->
+  <div id="depositModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-800 relative">
       <button onclick="closeModal('depositModal')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 dark:hover:text-white p-1">
         <i class="fa-solid fa-xmark text-lg"></i>
       </button>
 
-      <div class="flex items-center gap-3 mb-4">
-        <div class="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 flex items-center justify-center text-xl font-black">
-          <i class="fa-solid fa-wallet"></i>
-        </div>
-        <div>
-          <h3 class="font-black text-lg text-slate-900 dark:text-white">Deposit Funds</h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Add funds to purchase advertising and sponsor tasks.</p>
-        </div>
-      </div>
+      <h3 class="font-black text-lg text-slate-900 dark:text-white mb-2">Deposit Funds</h3>
+      <p class="text-xs text-slate-500 mb-4">Add balance to your purchase wallet.</p>
 
-      <div class="space-y-4">
-        <div>
-          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Select Payment Method</label>
-          <select class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-800 dark:text-slate-200 focus:outline-hidden">
-            <option>bKash Merchant / Payment (৳)</option>
-            <option>Nagad Payment (৳)</option>
-            <option>Binance Pay (USDT)</option>
-            <option>Payeer USD</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Amount (৳)</label>
-          <input type="number" value="500" min="100" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-900 dark:text-white focus:outline-hidden" />
-        </div>
-
-        <button onclick="alert('Deposit gateway opened. Please follow the instructions to complete payment.'); closeModal('depositModal');" class="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs transition">
-          Proceed to Pay
+      <div class="space-y-3 text-xs">
+        <input type="number" placeholder="Enter amount (৳)" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 font-bold focus:outline-hidden" />
+        <button onclick="alert('Deposit gateway opened.'); closeModal('depositModal');" class="w-full py-2.5 rounded-xl bg-brand-600 text-white font-extrabold text-xs">
+          Pay with bKash / Nagad / Crypto
         </button>
       </div>
     </div>
   </div>
 
-  <!-- 3. SIMULATED PTC AD VIEWER MODAL -->
-  <div id="ptcViewerModal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-slate-200 dark:border-slate-800 text-center relative">
-      <div class="w-16 h-16 rounded-3xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 flex items-center justify-center text-2xl font-black mx-auto mb-4 animate-pulse">
+  <!-- ================= PTC TIMER MODAL ================= -->
+  <div id="adTimerModal" class="fixed inset-0 z-50 hidden bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-[#111827] rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl border border-slate-200 dark:border-slate-800">
+      <div class="w-14 h-14 rounded-2xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 flex items-center justify-center text-2xl mx-auto mb-3 animate-pulse">
         <i class="fa-solid fa-eye"></i>
       </div>
-      <h3 id="ptcAdTitle" class="font-black text-lg text-slate-900 dark:text-white mb-1">Viewing Sponsor Ad</h3>
-      <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">Please keep this window open until the timer completes to receive your reward.</p>
+      <h3 id="timerAdTitle" class="font-black text-base text-slate-900 dark:text-white mb-1">Browsing Sponsor</h3>
+      <p class="text-xs text-slate-400 mb-5">Keep this window open to receive your reward.</p>
 
-      <div class="w-32 h-32 rounded-full border-4 border-emerald-500/20 border-t-emerald-500 flex items-center justify-center mx-auto mb-6">
-        <span id="ptcCountdownNumber" class="text-3xl font-black text-emerald-600 dark:text-emerald-400">15</span>
+      <div class="w-24 h-24 rounded-full border-4 border-indigo-200 dark:border-indigo-900 border-t-indigo-600 flex items-center justify-center mx-auto mb-5">
+        <span id="adCountdownVal" class="text-2xl font-black text-brand-600 dark:text-indigo-400">15</span>
       </div>
 
-      <button id="claimPtcRewardBtn" onclick="claimPTCReward()" disabled class="w-full py-3 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-400 font-extrabold text-xs cursor-not-allowed transition">
-        Waiting for timer...
-      </button>
-    </div>
-  </div>
-
-  <!-- 4. ADBLOCKER INFO MODAL (From original RewardJoy) -->
-  <div id="adBlockerModal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-[#111827] rounded-3xl p-6 max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-800 relative">
-      <button onclick="closeModal('adBlockerModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 dark:hover:text-white p-1">
-        <i class="fa-solid fa-xmark text-lg"></i>
-      </button>
-      <div class="w-12 h-12 rounded-2xl bg-rose-50 dark:bg-rose-950 text-rose-500 flex items-center justify-center text-xl font-bold mb-3">
-        <i class="fa-solid fa-shield-halved"></i>
-      </div>
-      <h3 class="font-black text-base text-slate-900 dark:text-white mb-2">AdBlocker Plugin Notice</h3>
-      <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-        You cannot surf ads or complete sponsor offers when an AdBlocker is active. To maximize your earnings, please disable your AdBlocker or whitelist RewardJoy.
-      </p>
-      <button onclick="closeModal('adBlockerModal')" class="mt-5 w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-extrabold text-xs">
-        Got it!
+      <button id="claimAdBtn" disabled onclick="claimAdReward()" class="w-full py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-400 font-extrabold text-xs cursor-not-allowed">
+        Counting down...
       </button>
     </div>
   </div>
 
   <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
-    // State management
-    const state = {
-      user: 'marufbeo360',
-      level: 0,
-      xp: 150,
-      currency: 'BDT', // 'BDT' or 'USD'
-      rateBDTtoUSD: 120.0,
-      mainBalanceBDT: 246.50,
-      purchaseBalanceBDT: 0.00,
-      referrals: 0,
-      streakClaimed: false,
-      activePTCReward: 0,
-      ptcInterval: null
+    let appState = {
+      balanceBDT: 0.246,
+      currency: 'BDT',
+      activeAdReward: 0,
+      timer: null
     };
 
-    // Load state from localStorage if available
-    function loadSavedState() {
-      const saved = localStorage.getItem('rewardjoy_state');
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          Object.assign(state, parsed);
-        } catch(e) {}
-      }
-      renderUI();
-    }
-
-    function saveState() {
-      localStorage.setItem('rewardjoy_state', JSON.stringify(state));
-    }
-
-    // Render formatted currency
-    function formatMoney(amountBDT) {
-      if (state.currency === 'BDT') {
-        return '৳ ' + amountBDT.toFixed(2);
+    function renderHeaderBalance() {
+      const el = document.getElementById('headerBalance');
+      const cardEl = document.getElementById('cardBalanceMain');
+      if (appState.currency === 'BDT') {
+        el.textContent = '৳ ' + appState.balanceBDT.toFixed(3);
+        if (cardEl) cardEl.textContent = '৳ ' + appState.balanceBDT.toFixed(3);
+        document.getElementById('headerCurrencyIcon').textContent = '৳';
+        document.getElementById('currencyTriggerText').textContent = '৳ BDT';
       } else {
-        const usd = amountBDT / state.rateBDTtoUSD;
-        return '$ ' + usd.toFixed(3);
+        const usd = appState.balanceBDT / 120.0;
+        el.textContent = '$ ' + usd.toFixed(4);
+        if (cardEl) cardEl.textContent = '$ ' + usd.toFixed(4);
+        document.getElementById('headerCurrencyIcon').textContent = '$';
+        document.getElementById('currencyTriggerText').textContent = '$ USD';
       }
     }
 
-    // Render All UI Elements
-    function renderUI() {
-      const bdtStr = '৳ ' + state.mainBalanceBDT.toFixed(2);
-      const usdStr = '$ ' + (state.mainBalanceBDT / state.rateBDTtoUSD).toFixed(3) + ' USD';
-
-      document.getElementById('headerCurrencyIcon').textContent = state.currency === 'BDT' ? '৳' : '$';
-      document.getElementById('headerBalanceText').textContent = formatMoney(state.mainBalanceBDT);
-      document.getElementById('dropdownBalanceText').textContent = formatMoney(state.mainBalanceBDT);
-      document.getElementById('cardMainBalance').textContent = formatMoney(state.mainBalanceBDT);
-      document.getElementById('cardMainBalanceUSD').textContent = state.currency === 'BDT' ? usdStr : bdtStr;
-      
-      document.getElementById('cardPurchaseBalance').textContent = formatMoney(state.purchaseBalanceBDT);
-      document.getElementById('cashoutPageBalance').textContent = formatMoney(state.mainBalanceBDT);
-      document.getElementById('modalAvailBalance').textContent = formatMoney(state.mainBalanceBDT);
-      
-      document.getElementById('currentCurrencyLabel').textContent = state.currency === 'BDT' ? '৳ BDT' : '$ USD';
-
-      // Level Progress
-      const levelProgress = Math.min(100, Math.round((state.xp / 1000) * 100));
-      document.getElementById('levelProgressBar').style.width = levelProgress + '%';
-      document.getElementById('progressText').textContent = state.xp + ' / 1000 XP';
-      document.getElementById('levelCoinsLeft').textContent = (1000 - state.xp).toLocaleString();
-
-      saveState();
+    function setCurrency(c) {
+      appState.currency = c;
+      document.getElementById('currencyDropdown').classList.add('hidden');
+      renderHeaderBalance();
     }
 
-    // Tab Switching
-    function switchTab(tabId) {
-      const tabs = ['dashboard', 'offers', 'surveys', 'browsing', 'cashout', 'affiliate', 'challenge', 'advertise'];
-      tabs.forEach(t => {
-        const el = document.getElementById('tab-' + t);
-        const nav = document.getElementById('nav-' + t);
-        if (el) el.classList.add('hidden');
-        if (nav) nav.classList.remove('active');
+    function setLang(code, flag, text) {
+      document.getElementById('currentFlag').textContent = flag;
+      document.getElementById('currentLangText').textContent = text;
+      document.getElementById('langDropdown').classList.add('hidden');
+    }
+
+    function switchTab(pageId) {
+      const pages = ['dashboard', 'offers', 'surveys', 'browsing', 'advertise', 'affiliate', 'challenge', 'profile'];
+      pages.forEach(p => {
+        const pageEl = document.getElementById('page-' + p);
+        const navEl = document.getElementById('nav-' + p);
+        if (pageEl) pageEl.classList.add('hidden');
+        if (navEl) navEl.classList.remove('active');
       });
 
-      const activeEl = document.getElementById('tab-' + tabId);
-      const activeNav = document.getElementById('nav-' + tabId);
-      if (activeEl) activeEl.classList.remove('hidden');
-      if (activeNav) activeNav.classList.add('active');
+      const targetPage = document.getElementById('page-' + pageId);
+      const targetNav = document.getElementById('nav-' + pageId);
+      if (targetPage) targetPage.classList.remove('hidden');
+      if (targetNav) targetNav.classList.add('active');
 
-      // Close mobile sidebar if open
-      const sidebar = document.getElementById('sidebar');
-      const backdrop = document.getElementById('sidebarBackdrop');
-      sidebar.classList.add('-translate-x-full');
-      backdrop.classList.add('hidden');
+      // Close mobile drawer
+      document.getElementById('sidebar').classList.add('-translate-x-full');
+      document.getElementById('sidebarBackdrop').classList.add('hidden');
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Toggle Dropdowns
+    function toggleMobileSidebar() {
+      document.getElementById('sidebar').classList.toggle('-translate-x-full');
+      document.getElementById('sidebarBackdrop').classList.toggle('hidden');
+    }
+
     function toggleDropdown(id) {
       const el = document.getElementById(id);
-      const all = ['langDropdown', 'currencyDropdown', 'balanceMenuDropdown', 'profileDropdown'];
-      all.forEach(item => {
-        if (item !== id) {
-          const d = document.getElementById(item);
-          if (d) d.classList.add('hidden');
+      ['langDropdown', 'currencyDropdown', 'balanceDropdown'].forEach(d => {
+        if (d !== id) {
+          const item = document.getElementById(d);
+          if (item) item.classList.add('hidden');
         }
       });
       if (el) el.classList.toggle('hidden');
     }
 
-    // Close Dropdowns when clicking outside
-    window.addEventListener('click', function(e) {
-      if (!e.target.closest('header')) {
-        ['langDropdown', 'currencyDropdown', 'balanceMenuDropdown', 'profileDropdown'].forEach(item => {
-          const d = document.getElementById(item);
-          if (d) d.classList.add('hidden');
-        });
-      }
-    });
-
-    // Language switch
-    function setLanguage(code, name) {
-      document.getElementById('currentLangFlag').textContent = code === 'bn' ? '🇧🇩' : '🇺🇸';
-      document.getElementById('currentLangText').textContent = code === 'bn' ? 'বাংলা' : 'English';
-      document.getElementById('langDropdown').classList.add('hidden');
-    }
-
-    // Currency Switcher
-    function setCurrency(curr) {
-      state.currency = curr;
-      document.getElementById('currencyDropdown').classList.add('hidden');
-      renderUI();
-    }
-
-    // Toggle Dark Mode
-    function toggleDarkMode() {
+    function toggleTheme() {
       document.documentElement.classList.toggle('dark');
       const icon = document.getElementById('themeIcon');
       if (document.documentElement.classList.contains('dark')) {
@@ -1407,230 +1341,97 @@
       }
     }
 
-    // Mobile Sidebar
-    function toggleMobileSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      const backdrop = document.getElementById('sidebarBackdrop');
-      sidebar.classList.toggle('-translate-x-full');
-      backdrop.classList.toggle('hidden');
-    }
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+    function openCashoutModal() { openModal('cashoutModal'); toggleDropdown(''); }
+    function openDepositModal() { openModal('depositModal'); toggleDropdown(''); }
 
-    // Modals
-    function openModal(id) {
-      document.getElementById(id).classList.remove('hidden');
-    }
-    function closeModal(id) {
-      document.getElementById(id).classList.add('hidden');
-      if (state.ptcInterval) clearInterval(state.ptcInterval);
-    }
-    function openCashoutModal() {
-      openModal('cashoutModal');
-      toggleDropdown('');
-    }
-    function openDepositModal() {
-      openModal('depositModal');
-      toggleDropdown('');
-    }
-    function openAdBlockerModal() {
-      openModal('adBlockerModal');
-      toggleDropdown('');
-    }
-
-    function openMethodCashout(gateway, minAmount) {
-      openModal('cashoutModal');
-      const select = document.getElementById('cashoutGatewaySelect');
-      for (let i=0; i<select.options.length; i++) {
-        if (select.options[i].value.includes(gateway)) {
-          select.selectedIndex = i;
-          break;
-        }
-      }
-      updateCashoutLimits();
-    }
-
-    function updateCashoutLimits() {
-      const val = document.getElementById('cashoutGatewaySelect').value;
-      const label = document.getElementById('accountInputLabel');
-      const input = document.getElementById('cashoutAccountInput');
-      const amountInput = document.getElementById('cashoutAmountInput');
-
-      if (val === 'bKash') {
-        label.textContent = 'bKash Personal Mobile Number';
-        input.placeholder = '017XXXXXXXX';
-        amountInput.min = '100';
-      } else if (val === 'Nagad') {
-        label.textContent = 'Nagad Personal Mobile Number';
-        input.placeholder = '018XXXXXXXX';
-        amountInput.min = '100';
-      } else if (val === 'Rocket') {
-        label.textContent = 'Rocket Account (with check digit)';
-        input.placeholder = '019XXXXXXXXX';
-        amountInput.min = '100';
-      } else {
-        label.textContent = 'Binance Pay ID / Crypto Wallet Address';
-        input.placeholder = 'e.g. 192837465 or 0x...';
-        amountInput.min = '120';
-      }
-    }
-
-    function handleCashoutSubmit(e) {
+    function handleCashout(e) {
       e.preventDefault();
-      const amount = parseFloat(document.getElementById('cashoutAmountInput').value);
-      const gateway = document.getElementById('cashoutGatewaySelect').value;
-      const account = document.getElementById('cashoutAccountInput').value;
-
-      if (amount > state.mainBalanceBDT) {
-        alert('Insufficient balance! You have ৳ ' + state.mainBalanceBDT.toFixed(2));
-        return;
-      }
-
-      state.mainBalanceBDT -= amount;
-      renderUI();
+      alert('Withdrawal request submitted successfully! Funds will arrive within 15 minutes.');
       closeModal('cashoutModal');
-
       if (window.confetti) confetti();
-      alert('Withdrawal request of ৳ ' + amount.toFixed(2) + ' via ' + gateway + ' (' + account + ') submitted successfully! Status: Processing.');
     }
 
-    // Daily streak reward
-    function claimDailyStreak() {
-      if (state.streakClaimed) {
-        alert('Daily streak already claimed today! Come back tomorrow.');
-        return;
-      }
-      state.mainBalanceBDT += 15.00;
-      state.xp += 50;
-      state.streakClaimed = true;
-      document.getElementById('streakBtn').classList.add('opacity-50', 'cursor-not-allowed');
-      document.getElementById('streakBtn').innerHTML = '<i class="fa-solid fa-check"></i> <span>Claimed (Day 1)</span>';
-      
-      if (window.confetti) confetti();
-      renderUI();
-      alert('Congratulations! +৳ 15.00 BDT and 50 XP added to your account for Day 1 streak!');
+    function copyRef() {
+      const input = document.getElementById('refInput');
+      input.select();
+      navigator.clipboard.writeText(input.value);
+      alert('Referral link copied to clipboard!');
     }
 
-    // Simulated Offer completion
-    function completeSimulatedTask(title, rewardBDT) {
-      state.mainBalanceBDT += rewardBDT;
-      state.xp += Math.round(rewardBDT * 1.5);
-      renderUI();
-      if (window.confetti) confetti();
-      alert('Success! You completed: "' + title + '". +৳ ' + rewardBDT.toFixed(2) + ' BDT added to your Main Balance!');
-    }
-
-    // Survey Simulation
-    function startSurvey(name, rewardBDT) {
-      const proceed = confirm('Starting survey: "' + name + '". (Est time: 5-8 mins). Would you like to complete and claim ৳' + rewardBDT + '?');
-      if (proceed) {
-        completeSimulatedTask(name, rewardBDT);
+    function simulateSurvey(provider) {
+      if (confirm('Start survey with ' + provider + '? Estimated reward: ৳ 45.00 BDT.')) {
+        appState.balanceBDT += 45.0;
+        renderHeaderBalance();
+        if (window.confetti) confetti();
+        alert('Survey complete! ৳ 45.00 added to your Main Balance.');
       }
     }
 
-    // PTC Ad Viewer with live countdown
-    function launchPTCAd(title, seconds, rewardBDT) {
-      state.activePTCReward = rewardBDT;
-      document.getElementById('ptcAdTitle').textContent = 'Browsing: ' + title;
-      const countEl = document.getElementById('ptcCountdownNumber');
-      const claimBtn = document.getElementById('claimPtcRewardBtn');
+    function launchAdTimer(title, seconds, reward) {
+      appState.activeAdReward = reward;
+      document.getElementById('timerAdTitle').textContent = title;
+      const countEl = document.getElementById('adCountdownVal');
+      const btn = document.getElementById('claimAdBtn');
       countEl.textContent = seconds;
-      claimBtn.disabled = true;
-      claimBtn.className = 'w-full py-3 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-400 font-extrabold text-xs cursor-not-allowed transition';
-      claimBtn.textContent = 'Viewing sponsor... (' + seconds + 's remaining)';
+      btn.disabled = true;
+      btn.className = 'w-full py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-400 font-extrabold text-xs cursor-not-allowed';
+      btn.textContent = 'Counting down...';
 
-      openModal('ptcViewerModal');
+      openModal('adTimerModal');
 
       let remaining = seconds;
-      if (state.ptcInterval) clearInterval(state.ptcInterval);
-      state.ptcInterval = setInterval(() => {
+      if (appState.timer) clearInterval(appState.timer);
+      appState.timer = setInterval(() => {
         remaining--;
         countEl.textContent = remaining;
-        claimBtn.textContent = 'Viewing sponsor... (' + remaining + 's remaining)';
         if (remaining <= 0) {
-          clearInterval(state.ptcInterval);
-          countEl.textContent = 'DONE';
-          claimBtn.disabled = false;
-          claimBtn.className = 'w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs transition shadow-lg cursor-pointer active:scale-98';
-          claimBtn.textContent = 'Claim +৳ ' + rewardBDT.toFixed(2) + ' BDT Reward!';
+          clearInterval(appState.timer);
+          btn.disabled = false;
+          btn.className = 'w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs transition cursor-pointer shadow-md';
+          btn.textContent = 'Claim Reward (+৳ ' + reward.toFixed(3) + ')';
           if (window.confetti) confetti();
         }
       }, 1000);
     }
 
-    function claimPTCReward() {
-      state.mainBalanceBDT += state.activePTCReward;
-      state.xp += 10;
-      renderUI();
-      closeModal('ptcViewerModal');
-      alert('Reward claimed! +৳ ' + state.activePTCReward.toFixed(2) + ' BDT added to your Main Balance.');
+    function claimAdReward() {
+      appState.balanceBDT += appState.activeAdReward;
+      renderHeaderBalance();
+      closeModal('adTimerModal');
+      alert('Reward of ৳ ' + appState.activeAdReward.toFixed(3) + ' credited to your account!');
     }
 
-    // Copy Referral Link
-    function copyReferralLink() {
-      const input = document.getElementById('refLinkInput');
-      input.select();
-      input.setSelectionRange(0, 99999);
-      navigator.clipboard.writeText(input.value);
-      const btn = document.getElementById('copyBtnText');
-      btn.textContent = 'Copied!';
-      setTimeout(() => { btn.textContent = 'Copy Link'; }, 2000);
-    }
-
-    function handleCreateAd(e) {
+    function handleAdSubmit(e) {
       e.preventDefault();
-      alert('Ad campaign submitted for review! It will go live once verified.');
+      alert('Campaign created! Pending review.');
       switchTab('dashboard');
     }
 
+    function setOfferSubtab(tab) {
+      ['offers', 'started', 'completed'].forEach(t => {
+        const btn = document.getElementById('offerTab-' + t);
+        if (btn) {
+          if (t === tab) {
+            btn.className = 'px-4 py-2 rounded-xl bg-brand-50 dark:bg-indigo-950 text-brand-600 dark:text-indigo-400 flex items-center gap-2';
+          } else {
+            btn.className = 'px-4 py-2 rounded-xl text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center gap-2';
+          }
+        }
+      });
+    }
+
     // Live Server Clock
-    function updateServerClock() {
+    setInterval(() => {
       const now = new Date();
       const pad = (n) => n.toString().padStart(2, '0');
       const str = now.getFullYear() + '.' + pad(now.getMonth()+1) + '.' + pad(now.getDate()) + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
-      const el = document.getElementById('serverTimeClock');
+      const el = document.getElementById('sidebarClock');
       if (el) el.textContent = str;
-    }
-    setInterval(updateServerClock, 1000);
-    updateServerClock();
+    }, 1000);
 
-    // Challenge Countdown timer
-    function updateCountdown() {
-      const now = new Date();
-      const end = new Date();
-      end.setHours(24, 0, 0, 0);
-      const diff = end - now;
-      const h = Math.floor(diff / 3600000);
-      const m = Math.floor((diff % 3600000) / 60000);
-      const s = Math.floor((diff % 60000) / 1000);
-      const pad = (n) => n.toString().padStart(2, '0');
-      const el = document.getElementById('challengeCountdown');
-      if (el) el.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
-    }
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-
-    // Live Payout Ticker Rotator
-    const tickerItems = [
-      'Tanvir withdrew ৳500 via bKash 2m ago',
-      'Alex completed AdGate Offer +$3.50 4m ago',
-      'Rahim completed CPX Survey +৳120 7m ago',
-      'Sumon withdrew $15.00 via Binance Pay 9m ago',
-      'Jennifer claimed Daily Streak ৳15.00 12m ago'
-    ];
-    let tickerIdx = 0;
-    setInterval(() => {
-      tickerIdx = (tickerIdx + 1) % tickerItems.length;
-      const el = document.getElementById('tickerBox');
-      if (el) {
-        el.style.opacity = '0';
-        setTimeout(() => {
-          el.textContent = tickerItems[tickerIdx];
-          el.style.opacity = '1';
-        }, 300);
-      }
-    }, 4000);
-
-    // Initial load
-    window.addEventListener('DOMContentLoaded', loadSavedState);
+    renderHeaderBalance();
   </script>
 </body>
 </html>
